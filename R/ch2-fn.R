@@ -1,0 +1,631 @@
+# [Ch-2 Functions] ----------------------------------------------------------------------------------
+# [Ch-2 Function Manual] -----------------------------------------
+
+#' Chapter 2 Functions Manual
+#'
+#' This function allows you to review the 7 functions in ch2.
+#' @param fn Number 0 to 7 for function. Defaults to 0.
+#' @keywords Ch2 Descriptive Statistics
+#' @return None
+#' @examples
+#' ch2.man()
+#' ch2.man(3:5)
+#' @export
+ch2.man = function(fn=0) {
+    if (0 %in% fn) {
+	cat("[1] freq.table\t\t Create a Frequency Table\n")
+	cat("[2] unstable.hist \t Draw Histograms of Unstable Processes\n")
+	cat("[3] strat.hist\t\t Draw Stratified Histograms\n")
+	cat("[4] corr.plot6\t\t Draw Scatter Plots of Six Cases\n")
+	cat("[5] scat.lm\t\t Draw a Scatter Plot with Regression Line\n")
+	cat("[6] location.est \t Calculate Measures of Location\n")
+	cat("[7] spread.est\t\t Calculate Measures of Dispersion\n")
+    }
+    if (1 %in% fn) {
+	cat("[1] Create a Frequency Table\n")
+	cat("freq.table(x, cuts, dig=4, mp=FALSE, ...)\n")
+	cat("[Mandatory Input]--------------------------\n")
+	cat("x  \t Data vector\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("cuts\t Vector of class limits (default=built-in values)\n")
+	cat("dig \t Number of digits below decimal point (default=4)\n")
+	cat("mp \t Plot histogram? (default=FALSE)\n")
+	cat("...   \t Graphic parameter (default=built-in values)\n")
+    }
+    if (2 %in% fn) {
+	cat("[2] Draw Histograms of Unstable Processes\n")
+	cat("unstable.hist(N=200,m1=10,s1=1,m2=6,s2=0.5,a=8,b=9,c=9,vc=rep(\"cyan\",4))\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("N  \t Number of data for each histogram (default=200)\n")
+	cat("m1 \t Mean the main distribution (default=10)\n")
+	cat("s1 \t Standard deviation of the main distribution (default=1)\n")
+	cat("m2 \t Mean of the contaminated distribution (default=6)\n")
+	cat("s2 \t Standard deviation of the contaminated distribution (default=0.5)\n")
+	cat("a  \t Lower limit of the missing values (default=8)\n")
+	cat("b  \t Upper limit of the missing values (default=9)\n")
+	cat("c  \t Lower limit of the cliff type range (default=9)\n")
+	cat("vc \t Color vector of histograms (default=\"cyan\")\n")
+    }
+    if (3 %in% fn) {
+	cat("[3] Draw Stratified Histograms\n")
+	cat("strat.hist(ng=3,n=200,m=2+4*1:ng,s=1,sp=c(min(m)-2,max(m)+2),vc,prob=FALSE)\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("ng \t Number of groups (default=3)\n")
+	cat("n  \t Number of data for each histogram (default=200)\n")
+	cat("m  \t Vector of mean for each group (default=2+4*1:ng)\n")
+	cat("s  \t Vector of standard deviation or each group (default=1)\n")
+	cat("sp \t Specification limits (default=c(min(m)-2,max(m)+2))\n")
+	cat("vc \t Color vector(1+ng) of histograms (default=\"orange\"(total), \"cyan\"(sub))\n")
+	cat("prob\t Logical value for selecting density instead of frequency (default=FALSE)\n")
+    }
+    if (4 %in% fn) {
+	cat("[4] Draw Scatter Plots of Six Cases\n")
+	cat("corr.plot6(m1 = 60, s1=10, m2=60, s2=10, r=0.7, r2=0.8, n=50)\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("m1 \t Mean of x (default= 60)\n")
+	cat("s1  \t Standard deviation of x (default=10)\n")
+	cat("m2 \t Mean of y (default=60)\n")
+	cat("s2 \t Standard deviation of y (default=10)\n")
+	cat("r   \t Correlation coefficient of x and y (default=0.7)\n")
+	cat("r2  \t Correlation coefficient of the stratified sample (default=0.8)\n")
+	cat("n   \t Number of data pairs (default=50)\n")
+    }
+    if (5 %in% fn) {
+	cat("[5] Draw a Scatter Plot with Regression Line\n")
+	cat("scat.lm(x, y, mt, xl, yl, w=c(7, 5), ...)\n")
+	cat("[Mandatory Input]--------------------------\n")
+	cat("x  \t Data vector for x-axis\n")
+	cat("y  \t Data vector for y-axis\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("mt \t Title of the scatter plot\n")
+	cat("xl \t Label of x-axis\n")
+	cat("yl \t Label of y-axis\n")
+	cat("w  \t Size of the graphic window (default=c(7, 5))\n")
+	cat("...  \t Graphic parameters \n")
+    }
+    if (6 %in% fn) {
+	cat("[6] Calculate Measures of Location\n")
+	cat("location.est(x, tr=0.1, detail=FALSE, dig=4)\n")
+	cat("[Mandatory Input]--------------------------\n")
+	cat("x  \t Data vector or matrix\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("tr \t Trim proportion of the trimmed mean (default=0.1)\n")
+	cat("detail\t Logical value for printing detailed output (default=FALSE)\n")
+	cat("dig\t Number of digits below the decimal point (default=4)\n")
+    }
+    if (7 %in% fn) {
+	cat("[7] Calculate Measures of Dispersion\n")
+	cat("spread.est(x, detail=FALSE, dig=4)\n")
+	cat("[Mandatory Input]--------------------------\n")
+	cat("x  \t Data vector or matrix\n")
+	cat("[Optional Input]--------------------------\n")
+	cat("detail\t Logical value for printing detailed output (default=FALSE)\n")
+	cat("dig\t Number of digits below the decimal point (default=4)\n")
+    }
+}
+
+# [2-1] Create a Frequency Table
+
+#' Create a Frequency Table
+#'
+#' To create a frequency table for a numeric vector (or matrix) x.
+#' @param x Data vector (or matrix).
+#' @param cuts Breaks (or number) of intervals.
+#' @param dig Number of digits. Defaults to 4.
+#' @param mp Logical variable for drawing a histogram. Defaults to FALSE.
+#' @param ... Other graphic parameters.
+#' @keywords Ch2 Descriptive Statistics
+#' @return xtab Frequency Table
+#' @examples
+#' set.seed(1234)
+#' freq.table(rnorm(100))
+#' freq.table(rnorm(100), mp=TRUE, prob=TRUE, col=7)
+#' @export
+freq.table = function(x, cuts, dig=4, mp=FALSE, ...) {
+	x = as.vector(x)
+	n = length(x)
+    # class limits
+	if (missing(cuts)) cuts = hist(x, plot=F)$breaks
+    # statistics
+	xh = hist(x, breaks=cuts, plot=mp, ...)
+	xcf = cumsum(xh$counts)
+	xrf = xh$counts/n
+	xrcf = xcf/n
+    # frequency table
+	ng = length(cuts)
+	xclass = paste0("(", xh$breaks[-ng], ", ", xh$breaks[-1], "]")
+	xtab = cbind(xh$mids, xh$counts, xcf, round(xrf, dig), round(xrcf, dig))
+	rownames(xtab) = xclass
+	colnames(xtab) = c("Center", "Freq", "Cum-Fr", "Rel-Fr", "Rel-CFr")
+	return(xtab)
+}
+
+# [2-2] Draw Histograms of Unstable Processes
+
+#' Unstable Histograms
+#'
+#' To create 4 types of unstable histograms.
+#' @param N Number of random variates. Defaults to 200.
+#' @param m1,m2 Means of two normal distributions.
+#' @param s1,s2 Standard deviations of two normal distributions.
+#' @param mp Logical variable for drawing a histogram. Defaults to FALSE.
+#' @param ... Other graphic parameters.
+#' @keywords Ch2 Descriptive Statistics
+#' @return None
+#' @examples
+#' unstable.hist()
+#' unstable.hist(m1=15, s1=1.5, m2=8, s2=0.6, a=16, b=17, c=17, vc=rainbow(4))
+#' @export
+unstable.hist = function(N=200, m1=10, s1=1, m2=6, s2=0.5,
+		a=8, b=9, c=9, vc=rep("cyan", 4)) {
+    # creating uniform probability vectors (0.9N, 0.5N, 0.1N)
+	p1 = (1:(0.9*N))/(0.9*N+1)
+	p2 = (1:(0.5*N))/(0.5*N+1)
+	p3 = (1:(0.1*N))/(0.1*N+1)
+    # creating quantiles of N(m1, s1^2) distribution (0.9N, 0.5N)
+	x1 = qnorm(p1, mean=m1, sd=s1)
+	x2 = qnorm(p2, mean=m1, sd=s1)
+    # creating quantiles of N(m2, s1^2) and N(m2, s2^2) distribution (0.5N, 0.1N)
+	y1 = qnorm(p2, mean=m2, sd=s1)
+	y2 = qnorm(p3, mean=m2, sd=s2)
+    # (a) Iland type : 90%(x1) + 10%(y2)
+	da = c(x1, y2)
+    # (b) Camel type : 50%(x2) +50%(y1)
+	db = c(x2, y1)
+    # (c) Sink type : remove values of x1 in [a, b]
+	dc = x1[(x1>b) | (x1<a)]
+    # (d) Cliff type : remove values of x1 below or above c
+	# [Correction]
+	if (c<m1) dd = x1[x1>=c] else dd = x1[x1<=c]
+    # making histograms
+	win.graph(7, 6)
+	par(mfrow=c(2,2))
+	hist(da, breaks=15, main="Type-A", xlab="(a)", col=vc[1])
+	hist(db, breaks=15, main="Type-B", xlab="(b)", col=vc[2])
+	hist(dc, breaks=12, main="Type-C", xlab="(c)", col=vc[3])
+	hist(dd, breaks=12, main="Type-D", xlab="(d)", col=vc[4])
+}
+
+# [2-3] Draw Stratified Histograms
+
+#' Stratified Histograms
+#'
+#' To create Stratified Histograms from a mixed data set.
+#' @param ng Number of classes. Defaults to 3.
+#' @param n Number of samples. Defaults to 200.
+#' @param m Vector of means. Defaults to 2+4*1:ng.
+#' @param s Standard deviations. Default: 1.
+#' @param sp Specification limits. Default: c(min(m)-2, max(m)+2).
+#' @param vc Colors of histograms.
+#' @param prob Density scale? Default: FALSE.
+#' @keywords Ch2 Descriptive Statistics.
+#' @return None
+#' @examples
+#' strat.hist()
+#' strat.hist(ng=4, m=c(6,8,12,13), sp=c(4,15))
+#' strat.hist(ng=5, n=400, s=c(4,2,0,3,5)/10+1, prob=T)
+#' @export
+strat.hist = function(ng=3, n=200, m=2+4*1:ng, s=1, sp=c(min(m)-2, max(m)+2), vc, prob=FALSE) {
+	if (ng >=9) stop("Number of class should be less than 9!")
+	if (length(s)==1) s=rep(s, ng)
+    # creating uniform probability vector (n)
+	p = (1:n)/(n+1)
+    # creating quantiles of N(m, s^2) distribution (n each)
+	x = vector("list", ng)
+	for (k in 1:ng) x[[k]] = qnorm(p, mean=m[k], sd=s[k])
+    # combining data
+	xd = x[[1]]
+	for (k in 2:ng) xd = c(xd, x[[k]])
+	nb1 = ceiling(sqrt(n*ng))
+	nb2 = ceiling(sqrt(n))
+    # adjusting graphic parameters
+	nr = ifelse(ng<=5, 2, 3)
+	nc = ceiling((ng+1)/nr)
+	h = ifelse(nr>2, 9, 6)
+	w = ifelse(nc>2, 9, 7)
+	mt = paste0("group-", LETTERS[1:ng])
+	xl = c(min(m[1]-3*s[1], sp[1]-2*s[1]), max(m[ng]+3*s[ng], sp[2]+2*s[ng]))
+	if (missing(vc)) vc = c("orange", rep("cyan", ng))
+    # making histograms
+	win.graph(w, h)
+	par(mfrow=c(nr, nc))
+	par(mar=c(3,3,4,1))
+    # modify
+	xh = hist(xd, breaks=nb1,plot=F)
+	brk = xh$breaks
+	if (prob) {
+	    ymg = vector()
+	    for (k in 1:ng) ymg[k] = max(hist(x[[k]], breaks=brk, plot=F)$density)
+	    ym = max(ymg)
+	} else {
+	ym = max(xh$counts)
+	}
+
+	hist(xd, breaks=brk, main="All Data", probability=prob,
+		ylab="", xlab="", xlim=xl, col=vc[1])
+
+	brk = xh$breaks
+	segments(sp, 0, sp, ym/2, lwd=2, col=2)
+	text(sp, c(ym/2,ym/2), c("SL", "SU"), col=2, pos=3)
+	for (k in 1:ng) {hist(x[[k]], breaks=brk, main=mt[k], probability=prob,
+		ylab="", xlab="", ylim=c(0,ym), xlim=xl, col=vc[k+1])
+		segments(sp, 0, sp, ym/2, lwd=2, col=2)
+		text(sp, c(ym,ym)/2, c("SL", "SU"), col=2, pos=3) }
+}
+
+# [2-4] Draw Scatter Plots of Six Cases
+# creating random variables of the bivariate normal distribution
+rbivariate = function(m1, s1, m2, s2, r, n) {
+    z1 = rnorm(n)
+    z2 = rnorm(n)
+    x = sqrt(1-r^2)*s1*z1 + r*s1*z2 + m1
+    y = s2*z2 + m2
+    return(list(x,y))
+}
+
+# Draw 6 types of scatter plots
+
+#' @title Six Scatter Plots
+#' @description Create 6 types of scatter plots.
+#' @param m1 Mean 1. Default: 60.
+#' @param s1 Standard deviation 1. Default: 10.
+#' @param m2 Mean 2. Default: 60.
+#' @param s2 Standard deviation 2. Default: 10.
+#' @param r Correlation Coefficient 1. Default: 0.7.
+#' @param r2 Correlation Coefficient 2. Default: -0.8.
+#' @param n Number of samples. Default: 50.
+#' @return None
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' corr.plot6()
+#' corr.plot6(r=0.6, r2=0.9, n=100)
+#' @export
+corr.plot6 = function(m1 = 60, s1=10, m2=60, s2=10, r=0.7, r2=-0.8, n=50) {
+    # adjusting graphic parameters
+	x1 = floor(m1-3*s1)
+	x2 = ceiling(m1+3*s1)
+	y1 = floor(m2-3*s2)
+	y2 = ceiling(m2+3*s2)
+	xa = seq(m1-2.5*s1, m1+2.5*s1, length=n)
+    # setting seed
+	set.seed(9857)
+    # positive correlation
+	d1 = rbivariate(m1, s1, m2, s2, r, n)
+    # negative correlation
+	d2 = rbivariate(m1, s1, m2, s2, -r, n)
+    # quadratic relation
+	d3 = list(xa, (m2+2*s2)-0.05*(xa-m1)^2+rnorm(n, 0, s2*0.6))
+    # little correlation
+	d4 = list(rnorm(n, m1, s1), rnorm(n, m2, s2))
+	d81 = rbivariate(m1, s1, m2-1.5*s2, s2, r, n/2)
+	d82 = rbivariate(m1, s1, m2+1.5*s2, s2, r2, n/2)
+	d8 = list(c(d81[[1]], d82[[1]]), c(d81[[2]], d82[[2]]))
+    # open graphic window
+	win.graph(9,6)
+	par(mfrow=c(2,3))
+    # positive correlation
+	plot(d1[[1]],d1[[2]], pch=19, cex=1.2, xlab="(a) Positive Correlation", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	abline(lm(d1[[2]]~d1[[1]]), lwd=2, lty=2, col=2)
+    # negative correlation
+	plot(d2[[1]],d2[[2]], pch=19, cex=1.2, xlab="(b) Negative Correlation", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	abline(lm(d2[[2]]~d2[[1]]), lwd=2, lty=2, col=2)
+    # little correlation
+	plot(d4[[1]],d4[[2]], pch=19, cex=1.2, xlab="(c) Little Correlation", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	abline(lm(d4[[2]]~d4[[1]]), lwd=2, lty=2, col=2)
+    # quadratic relation
+	plot(d3[[1]],d3[[2]], pch=19, cex=1.2, xlab="(d) Quadratic Relation", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	abline(lm(d3[[2]]~d3[[1]]), lwd=2, lty=2, col=2)
+    # outlier
+	o1 = c(d1[[1]][1:(n-2)], m1-2*s1, m1+2*s1)
+	o2 = c(d1[[2]][1:(n-2)], m2+2*s2, m2-2*s2)
+	plot(o1, o2, pch=19, cex=1.2, xlab="(e) Outlier", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	points(c(m1-2*s1, m1+2*s1), c(m2+2*s2, m2-2*s2), pch=0, cex=2, col=2)
+	abline(lm(o2~o1), lwd=2, lty=2, col=2)
+    # stratification
+	plot(d8[[1]],d8[[2]], pch=19, cex=1.2, xlab="(f) Stratification", cex.lab=1.5,
+		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
+	abline(lm(d8[[2]]~d8[[1]]), lwd=2, lty=2, col=2)
+	abline(lm(d81[[2]]~d81[[1]]), lwd=2, lty=2, col=4)
+	abline(lm(d82[[2]]~d82[[1]]), lwd=2, lty=2, col=4)
+}
+
+# [2-5] Draw a Scatter Plot with a Regression Line
+#' Scatter Plot with a Regression Line
+#'
+#' To create a scatter plot with a linear regression line.
+#' @param x Vector of x variable.
+#' @param y Vector of y variable.
+#' @param mt Title of the plot.
+#' @param xl Label of x-axis.
+#' @param yl Label of y-axis.
+#' @param w Size of graphic window. Default: c(7, 5).
+#' @param ... Other graphic parameters.
+#' @return Object lm(y~x)
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' with(mtcars, scat.lm(wt, mpg, mt="Weight vs. MPG"))
+#'
+#' yl = "Miles per Gallon (mpg)"
+#' mt = paste("Scatter Plot of", names(mtcars)[3:7], "vs. MPG")
+#' for (k in 3:7) scat.lm(mtcars[[k]],mtcars$mpg, mt=mt[k-2], xl=names(mtcars)[k], yl=yl)
+#' @export
+scat.lm = function(x, y, mt, xl, yl, w=c(7, 5), ...) {
+	if (missing(xl)) xl = deparse(substitute(x))
+	if (missing(yl)) yl = deparse(substitute(y))
+	if (missing(mt)) mt = paste(xl, ":", yl, "scatter plot")
+    # size of the graphic window
+	win.graph(w[1], w[2])
+    # simple scatter plot --> plot(x, y) function
+	plot(x, y, main=mt, xlab=xl, ylab=yl, pch=19, cex=1.2, ...)
+	grid(col=3)
+    # fitted simple regression line --> lm(y ~ x) function & abline( ) function
+	sr = lm(y ~ x)
+	ssr = summary(sr)
+	abline(sr, lty=2, lwd=2, col=2)
+    # formula of fitted simple regression equation
+	b = sr$coef[[2]]
+	a = sr$coef[[1]]
+	sign = ifelse(b < 0, "", "+")
+	pos = ifelse(b <0, "topright", "topleft")
+	pv = 1-pf(ssr$f[1], ssr$f[2], ssr$f[3])
+	legend(pos, legend=c(paste("Y =", round(a, 4), sign, round(b, 4), "X"),
+		paste("R-sq =", round(ssr$r.sq, 4)),
+		paste("P-v =", format(pv, digits=3, scientific=T)) ),
+		text.col=c(2, 4, 1), cex=1)
+	invisible(sr)
+}
+
+# [2-6] Calculate Measures of Location
+#' Estimation of Location
+#'
+#' To calculate location estimates such as
+#' Sample mean, median, mode, geometric mean, harmonic mean, and trimmed mean.
+#' @param x Vector of input data.
+#' @param tr Treaming ratio. Default: 0.1.
+#' @param detail Print detailed output? Default: FALSE.
+#' @param dig Number of digits below the decimal point. Default: 4
+#' @return Six measures of location.
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' location.est(mtcars$mpg, detail=T)
+#'
+#' set.seed(1234)
+#' x = round(rnorm(100, 10, 2), 1)
+#' location.est(x, detail=T)
+#' @export
+location.est = function(x, tr=0.1, detail=FALSE, dig=4) {
+     rdd = function(x) round(x, dig)
+	n = length(x)
+    # mean --> mean( ) function
+	xmean = mean(x)
+    # median --> median( ) function
+	xmed = median(x)
+    # frequency --> table( ) function
+	tabx = table(x)
+    # mode --> value with maximum frequency in table
+	xmode = as.numeric(names(tabx[tabx==max(tabx)]))
+	if (max(tabx)==1) xmode=NA
+    # define function for geometric mean
+	gm_mean = function(a) {prod(a)^(1/length(a))}
+    # geometric mean --> use previously defined gm_mean( ) function
+	gmean = gm_mean(x)
+    # define function for harmonic mean
+	hmean = 1/mean(1/x)
+    # trimmed mean (10%) --> mean(x, trim) function
+	tmean = mean(x, trim=tr)
+    # display output --> cat( ) function
+	if (length(xmode)==1) {
+	  res=c(xmean, xmed, xmode, gmean, hmean, tmean)
+	  names(res)=c("Mean", "Median", "Mode", "Geom-M", "Harm-M", "Trim-M")
+	} else {
+	  res=c(xmean, xmed, gmean, hmean, tmean)
+	  names(res)=c("Mean", "Median", "Geom-M", "Harm-M", "Trim-M")
+	  res = list(location_est=res, mode_est=xmode)
+	}
+	if (detail==FALSE) {
+		print(res)
+	# cat("Mean=", xmean, "\t Median=", xmed, "\t Mode=", xmode, "\n")
+	# cat("Geom. Mean=", gmean, "\t Harm. Mean=", hmean,
+	#	paste0("\t Trim. Mean(",tr,")="), tmean, "\n")
+	}
+	if (detail==TRUE) {
+	nt = floor(n*tr)
+	sumt = sum(sort(x)[(nt+1):(n-nt)])
+	n2 = n - 2*nt
+	cat("Calculation in Detail -----------------------------------------------------",
+		"\n(1) Mean =", paste0(rdd(sum(x)), "/", n), "=", rdd(xmean),
+		"\n(2) Median =", paste0("x(", (n+1)/2, ") ="), rdd(xmed),
+		"\n(3) Mode =", xmode, paste0("(", max(tabx), " times)"),
+		"\n(4) Geom. Mean =", paste0("(",format(prod(x), F,dig),
+				")^(1/", n, ") ="), rdd(gmean),
+		"\n(5) Harm. Mean =", paste0("1/(", rdd(mean(1/x)), ") ="), rdd(hmean),
+		paste0("\n(6) Trim. Mean(",tr,") = ", rdd(sumt), "/", n2), "=", rdd(tmean), "\n")
+	}
+	invisible(res)
+}
+
+# [2-7] Calculate Measures of Dispersion
+
+#' Spread Estimation
+#'
+#' To calculate spread estimates.
+#' @param x Vector of input data.
+#' @param detail Print detailed output? Default: FALSE.
+#' @param dig Number of digits below the decimal point. Default: 4
+#' @return Five measures of dispersion.
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' spread.est(mtcars$mpg, detail=T)
+#'
+#' set.seed(1234)
+#' x = round(rnorm(100, 10, 2), 1)
+#' spread.est(x, detail=T)
+#' @export
+spread.est = function(x, detail=FALSE, dig=4) {
+	if (is.matrix(x)) x = as.vector(x)
+	n = length(x)
+    # sample variance --> var( ) function
+	xvar = var(x)
+    # standard deviation --> sd( ) function
+	xsd = sd(x)
+    # range --> max( )-min( ) function
+	xrng = max(x) - min(x)
+    # inter-quartile range --> IQR( ) function
+	xiqr = IQR(x)
+    # coefficient of variation --> sd( ) / mean( ) function
+	xcv = xsd / mean(x)
+    # display output
+	res=c(xvar, xsd, xrng, xiqr, xcv)
+	names(res)=c("Variance", "Std-Dev", "Range", "IQR", "CoV")
+
+	if (detail==FALSE) {
+		print(res)
+	# cat("Variance=", xvar, "\t Stand. Dev.=", xsd,
+	#	"\nRange=", xrng, "\t IQR=", xiqr, "\t CoV=", xcv, "\n")
+	}
+	if (detail==TRUE) {
+	cat("Calculation in Detail -----------------------------------------------------",
+	"\n(1) Variance =", paste0("(", round(sum(x^2),dig)," - ", round(abs(sum(x)),dig),
+		"\U00B2/", n, ") /", n-1), "=", round(xvar,dig),
+	"\n(2) Stand. Dev. =", paste0("\U221A(", round(xvar,dig), ") ="), round(xsd,dig),
+	"\n(3) Range =", round(max(x),dig), "-", paste0("(",round(min(x),dig),")"),
+		"=", round(xrng,dig),
+	"\n(4) IQR =", round(quantile(x, 0.75),dig), "-",
+		paste0("(",round(quantile(x, 0.25),dig),")"), "=", round(xiqr,dig),
+	"\n(5) CoV =", round(xsd,dig), "/", paste0("(",round(mean(x),dig),")"),
+		"=", round(xcv,dig), "\n")
+	}
+	invisible(res)
+}
+
+# [2-A1] Draw Multiple Histograms from a Data Frame
+
+#' Multiple Histograms
+#'
+#' To draw multiple histograms from a data frame.
+#' @param df Data frame of input data.
+#' @param br Break method Default: Sturges.
+#' @param mt Vector of main titles.
+#' @param xl Vector of x labels.
+#' @param vcol Vector of colors for the histograms.
+#' @param ... Other graphic parameters.
+#' @return None.
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' mult.hist(iris[1:4])
+#' mult.hist(iris[1:4], vcol=rainbow(4))
+#' mult.hist(mtcars[1:7], vcol=rainbow(7))
+#' @export
+mult.hist = function(df, br, mt, xl, vcol, ...) {
+    # making histograms
+	if (missing(df)) stop("Please input a data frame with numeric data.")
+	if (!is.list(df)) stop("Please input a LIST with numeric data.")
+	ng = length(df)
+	if (ng>16) stop("The number of groups must br at most 16.")
+	if (missing(br)) {mybr=rep("Sturges", ng)
+	} else { mybr=br }
+
+	if (missing(mt)) {mymt=paste("Histogram of", names(df))
+	} else { mymt=mt }
+
+	if (missing(xl)) {myxl=names(df)
+	} else { myxl=xl }
+
+	if (missing(vcol)) {mycol=rep(NULL,ng)
+	} else { mycol=vcol }
+
+	wc=c(1,2,3,2,3, 3,4,4,3,4, 4,4,4,4,4, 4,5,5,5,5)
+	wr=c(1,1,1,2,2, 2,2,2,3,3, 3,3,4,4,4, 4,4,4,4,4)
+	ww=c(4,6,9,7,9, 9,9,9,9,11, 11,11,11,11,11, 11,13,13,13,13)
+	wl=c(3,3,3,6,6, 6,6,6,9,9, 9,9,11,11,11, 11,11,11,11,11)
+	win.graph(ww[ng], wl[ng])
+	par(mfrow=c(wr[ng], wc[ng]))
+
+	for (k in 1:ng) hist(df[[k]], breaks=mybr[k], main=mymt[k], xlab=myxl[k], col=mycol[k])
+}
+
+# [2-A2] Draw Stratified Histograms from a Data Frame
+
+#' Stratified Histograms
+#'
+#' To draw stratified histograms from a data frame.
+#' @param df Data frame of input data.
+#' @param cdep The column of the dependent variable.
+#' @param cfac The column of the stratifying factor.
+#' @param spec Vector of x labels.
+#' @param br Break method Default: Sturges.
+#' @param vc Vector of colors for the histograms.
+#' @param prob Logical value for selecting density instead of frequency Default: FALSE.
+#' @return None.
+#' @keywords Ch2. Descriptive Statistics
+#' @examples
+#' strat.hist2(iris, 1, 5)
+#'
+#' for (k in 1:4) strat.hist2(iris, k, 5)
+#' @export
+strat.hist2 = function(df, cdep, cfac, spec, br, vc, prob=FALSE) {
+	if (missing(df)) stop("Please input a data frame with numeric data.")
+	if (missing(cdep)) stop("Please input the column of the dependent variable.")
+	if (missing(cfac)) stop("Please input the column of the factor.")
+          # Assign variables
+	x = df[[cdep]]
+	n = length(x)
+	fac = df[[cfac]]
+	if (!is.factor(fac)) fac = as.factor(fac)
+          # Number of Groups
+	gname = levels(fac)
+	ng = length(gname)
+	if (ng>8) stop("The number of groups must be 8 or less.")
+          # Breaks for the histogram
+	if (missing(br)) {mybr=rep("Sturges", ng)
+	} else { mybr=br }
+          # adjusting graphic parameters
+	wc= c(2,2,2, 3,3, 3,3,3)
+	wr= c(1,2,2, 2,2, 3,3,3)
+	ww=c(7,7,7, 9,9, 9,9,9)
+	wl= c(3,6,6, 6,6, 9,9,9)
+
+         # set up parameters
+	if (missing(vc)) vc = c("orange", rep("cyan", ng))
+	nb1 = ceiling(sqrt(n))
+	xl = range(x)
+	if (!missing(spec)) xl = c(min(xl[1],spec[1]), max(xl[2],spec[2]))
+	rng = xl[2]-xl[1]
+	xl = xl + 0.05*rng*c(-1, 1)
+
+	win.graph(ww[ng], wl[ng])
+	par(mfrow=c(wr[ng], wc[ng]))
+	par(mar=c(3,3,4,1))
+
+         # modify
+	xh = hist(x, breaks=nb1, plot=F)
+	brk = xh$breaks
+	if (prob) {
+	    ymg = vector()
+	    for (k in 1:ng) ymg[k] = max(hist(x[fac==gname[k]], breaks=brk, plot=F)$density)
+	    ymax = max(ymg)
+	} else {
+	ymax = max(xh$counts)
+	}
+
+         # making the main histogram
+	hist(x, breaks=nb1, main=names(df)[cdep], probability=prob,
+		ylab="", xlab="", xlim=xl, col=vc[1])
+	if (!missing(spec)) {
+		segments(spec, 0, spec, ymax/2, lwd=2, col=2)
+		text(spec, c(ymax/2,ymax/2), c("SL", "SU"), col=2, pos=3)
+	}
+
+         # making stratified histograms
+	for (k in 1:ng) {hist(x[fac==gname[k]], breaks=brk, main=gname[k], probability=prob,
+		ylab="", xlab="", ylim=c(0, ymax), xlim=xl, col=vc[k+1])
+		if (!missing(spec)) {
+		  segments(spec, 0, spec, ymax/2, lwd=2, col=2)
+		  text(spec, c(ymax, ymax)/2, c("SL", "SU"), col=2, pos=3) }
+	}
+}
