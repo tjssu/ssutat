@@ -26,8 +26,8 @@ ch7.man = function(fn=0) {
 	cat("mt\t Graph title\n")
 	cat("dig\t Number of digits below the decimal point (default=3)\n")
 	cat("xn\t Random variable name (default=\"x\")\n")
-	cat("prt\t Logical value for printing expected values and variances (default=FALSE)\n")
-	cat("plot\t Logical value for plotting probability density function (default=FALSE)\n")
+	cat("prt\t Logical value for printing expected values ... (default=FALSE)\n")
+	cat("plot\t Logical value for plotting PDF (default=FALSE)\n")
 	cat("pos\t Legend location (default=\"center\")\n")
     }
     if (2 %in% fn) {
@@ -47,10 +47,10 @@ ch7.man = function(fn=0) {
 	cat("dcol\t Graph color vector (default as follows)\n")
 	cat("\t c(\"red\", \"blue\", \"orange2\", \"green4\", \"purple\", \"cyan2\")\n")
 	cat("np\t Number of plot points (default=100)\n")
-	cat("pos1\t Legend location of probability density function (default=\"topright\")\n")
-	cat("pos2\t Legend location of cumulative distribution function (default=\"bottomright\")\n")
-	cat("xp1\t Vector of specific x values for probability density function (ignore legend)\n")
-	cat("xp2\t Vector of specific x values for cumulative distribution function (ignore legend)\n")
+	cat("pos1\t Legend location of the PDF (default=\"topright\")\n")
+	cat("pos2\t Legend location of the CDF (default=\"bottomright\")\n")
+	cat("xp1\t Vector of specific x values for the PDF (ignore legend)\n")
+	cat("xp2\t Vector of specific x values for the CDF (ignore legend)\n")
     }
 }
 
@@ -97,8 +97,8 @@ cont.exp = function(FUN, lo, up, mt, dig=3, xn="X", prt=FALSE, plot=FALSE, pos="
 	xa = seq(lo, up, length=200)
     	# Plot the probability distribution function f(x)
 	plot(xa, FUN(xa), type="l", main=mt, ylim=c(0, max(FUN(xa))*1.1),
-		xlab="", ylab=paste0("f(", xn,")"), lwd=2, col=2)
-	abline(v=Ex, lty=2, col=4)
+		xlab="", ylab=paste0("f(", xn,")"), lwd=2, col="red")
+	abline(v=Ex, lty=2, col="blue")
       # Display legend
 	legend(pos,
 		c(paste0("E(",Xn,")=",round(Ex,dig)),
@@ -297,7 +297,7 @@ cont.mpdf = function(dist, lo, up, para, para2, ymax, mt, dcol, np=100,
 	if (missing(ymax)) ymax = max(pdf)
 	plot(xa, pdf[ ,1], type="l", main=mt1,
 		lwd=2, col=dcol[1], ylab="f(x)", xlab="(a)", ylim=c(0, ymax))
-	grid(col=3)
+	grid(col="green")
 	if (N>=2) for (i in 2:N) lines(xa, pdf[ ,i], lwd=2, col=dcol[i])
     # [Correction]
         if (N<=10) {
@@ -311,7 +311,7 @@ cont.mpdf = function(dist, lo, up, para, para2, ymax, mt, dcol, np=100,
     # Plot the cumulative distribution function
 	plot(xa, cdf[ ,1], type="l", main=mt2,
 		lwd=2, col=dcol[1], ylim=c(0,1), ylab="F(x)", xlab="(b)")
-	grid(col=3)
+	grid(col="green")
 	if (N>=2) for (i in 2:N) lines(xa, cdf[ ,i], lwd=2, col=dcol[i])
     # [Correction]
         if (N<=10) {

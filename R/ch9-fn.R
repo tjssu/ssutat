@@ -156,20 +156,20 @@ norm.sim=function(ns, mu=0, sig=1, N=10000, ng=50, seed=9857, dig=4) {
 	par(mar=c(3,4,4,2))
 	x1 = mu-3*sig
 	x2 = mu+3*sig
-	hist(xb, breaks=ng, prob=T, col=7, xlim=c(x1, x2), ylab="f(x)", xlab="",
+	hist(xb, breaks=ng, prob=T, col="yellow", xlim=c(x1, x2), ylab="f(x)", xlab="",
 		main=bquote(bold("Distribution of ") ~bar(X)[.(ns)]~~ bold(from) ~~ N( .(mu) , .(sig)^2 ) ))
-	curve(popd, x1, x2, col=4, add=T)
-	curve(smd, x1, x2, col=2, add=T)
+	curve(popd, x1, x2, col="blue", add=T)
+	curve(smd, x1, x2, col="red", add=T)
 	legend("topright", c("Para.  Exact  Simul.",
 			paste("E(X) ", Ex2, Ex1, sep="  "), paste("D(X)", Dx2, Dx1, sep="  ")),
-		text.col=c(1,4,4) )
+		text.col=c("black","blue","blue") )
     # Plot distribution of the standardized statistic
 	hist(zb, breaks=2*ng, prob=T, col="cyan", xlim=c(-4, 4), ylab=bquote(phi (z)), xlab="",
 		main="Distribution of the Standardized Sample Mean")
-	curve(dnorm, -4, 4, col=2, add=T)
+	curve(dnorm, -4, 4, col="red", add=T)
 	legend("topright", c("Para.  Exact  Simul.",
 			paste("E(Z)    ", 0, "    ", Ez), paste("D(Z)    ", 1, "    ", Dz)),
-		text.col=c(1,4,4) )
+		text.col=c("black","blue","blue") )
 }
 # [9-2] Minimum Number of Samples from Normal Population
 #' @title Minimum Number of Samples
@@ -185,7 +185,7 @@ norm.sim=function(ns, mu=0, sig=1, N=10000, ng=50, seed=9857, dig=4) {
 #'
 #' @examples
 #' alp = c(0.01, 0.05, 0.1)
-#' dcol = c(2, 4, "green4")
+#' dcol = c("red", "blue", "green4")
 #' norm.spn(kp=0.4, alp, dcol=dcol)
 #' @rdname norm.spn
 #' @export
@@ -247,9 +247,9 @@ norm.spn=function(kp, alp, lo=0.1, up=1, mt, dcol, log=TRUE) {
     # Illustrate specific cases
         # [Correction]
 	if (nkp==1) kcex=vcex else kcex = vcex/nkp^0.1
-	for (k in 1:nkp) segments(kp[k], y1, kp[k], spn(kp[k], min(alp)), lty=2, col=6)
-	for (k in 1:nkp) segments(lo, spn(kp[k], alp), kp[k], spn(kp[k], alp), lty=2, col=6)
-	for (k in 1:nkp) text(x1, spn(kp[k], alp), labels=spn(kp[k], alp), cex=kcex, col=4)
+	for (k in 1:nkp) segments(kp[k], y1, kp[k], spn(kp[k], min(alp)), lty=2, col="pink")
+	for (k in 1:nkp) segments(lo, spn(kp[k], alp), kp[k], spn(kp[k], alp), lty=2, col="pink")
+	for (k in 1:nkp) text(x1, spn(kp[k], alp), labels=spn(kp[k], alp), cex=kcex, col="blue")
 }
 
 # [9-3] Simulation for the t-distribution
@@ -312,13 +312,13 @@ tdist.sim=function(ns, mu=0, sig=1, N=10000, ng=100, seed=9857, dig=4, mt) {
 	} else {ymax = hmax*1.2}
 
 	win.graph(7, 5)
-	hist(zb, breaks=mycut, prob=T, col=7, ylim=c(0, ymax), xlim=c(x1, x2), ylab="f(t)", xlab="t", main=mt)
-	curve(dnorm, x1, x2, lwd=2, col=4, add=T)
-	curve(smd, x1, x2, lwd=2, col=2, add=T)
+	hist(zb, breaks=mycut, prob=T, col="yellow", ylim=c(0, ymax), xlim=c(x1, x2), ylab="f(t)", xlab="t", main=mt)
+	curve(dnorm, x1, x2, lwd=2, col="blue", add=T)
+	curve(smd, x1, x2, lwd=2, col="red", add=T)
 	legend("topright", c("Para.  Exact  Simul.",
 			paste("E(T)      ", 0, "      ", Ez), paste("D(T) ", Dt, " ", Dz)),
-		text.col=c(1,4,4) )
-	legend("topleft", c(paste0("t(", ns-1,")"), "N(0,1)"), lwd=c(2,2), col=c(2,4))
+		text.col=c("black","blue","blue") )
+	legend("topleft", c(paste0("t(", ns-1,")"), "N(0,1)"), lwd=c(2,2), col=c("red","blue"))
 	}
 }
 
@@ -388,19 +388,19 @@ chi.sim=function(ns, mu=0, sig=1, N=10000, ng=100, seed=9857, dig=4, muknow=TRUE
 	win.graph(7, 5)
 	mt = ifelse(muknow, "Distribution of Standardized Sum of Squares",
 		"Dist. of Sum of Squares with Unknown Mean")
-	hist(cs, breaks=ng, prob=T, col=7, ylim=c(0, ymax), xlim=c(x1, x2), ylab="f(x)", xlab="x",
+	hist(cs, breaks=ng, prob=T, col="yellow", ylim=c(0, ymax), xlim=c(x1, x2), ylab="f(x)", xlab="x",
 		main=paste0(mt, " (n=", ns, ", N=", N, ")"))
-	curve(svd0, x1, x2, lwd=2, col=2, add=T)
-	curve(svd1, x1, x2, lwd=2, col=4, add=T)
+	curve(svd0, x1, x2, lwd=2, col="red", add=T)
+	curve(svd1, x1, x2, lwd=2, col="blue", add=T)
 	legend("right", c("Para.   Exact    Error    Simul.",
 			paste("E(X)      ", nu0, "      ", nu1, "     ", Ec),
 			paste("D(X)", Dc0, " ", Dc1, " ", Dc)),
-		text.col=c(1,4,4) )
+		text.col=c("black","blue","blue") )
 	leg=list()
 	leg[[1]] = bquote(chi^2 ~( .(nu0) ))
 	leg[[2]] = bquote(chi^2 ~( .(nu1) ))
 	legend("topright", sapply(leg, as.expression),
-		lwd=c(2,2), col=c(2,4))
+		lwd=c(2,2), col=c("red","blue"))
 }
 
 # [9-5] Simulation for the F-distribution
@@ -464,21 +464,21 @@ fdist.sim2=function(sig1, sig2, n1, n2, N=10000, ng=300, seed=9857, xp=1:9, dig=
 	}
 
 	win.graph(7, 5)
-	hist(fs, breaks=nbrk, prob=T, xlim=c(0, xmax), ylim=c(0, ymax), col=7,
+	hist(fs, breaks=nbrk, prob=T, xlim=c(0, xmax), ylim=c(0, ymax), col="yellow",
 	main=bquote("("~S[1]^2~"/"~sigma[1]^2~ ")/(" ~S[2]^2~"/"~sigma[2]^2~") ~"~ F( .(n1-1) , .(n2-1) ) ),
 		ylab="f(x)", xlab="x")
-	curve(fd0, 0, xmax, lwd=2, col=2, add=T)
-	curve(fd1, 0, xmax, lwd=2, col=4, add=T)
+	curve(fd0, 0, xmax, lwd=2, col="red", add=T)
+	curve(fd1, 0, xmax, lwd=2, col="blue", add=T)
     # Display legends
 	legend("right", c("Para.  Exact   Error  Simul.",
 			paste("E(X)", paste(format(c(Ex0, Ex1, Ex), digits=dig), collapse="  ")),
 			paste("D(X)", paste(format(c(Dx0, Dx1, Dx), digits=dig), collapse="  ")) ),
-		text.col=c(1,4,4) )
+		text.col=c("black","blue","blue") )
 	leg=list()
 	leg[[1]] = bquote(F( .(n1-1) , .(n2-1) ))
 	leg[[2]] = bquote(F( .(n1) , .(n2) ))
 	legend("topright", sapply(leg, as.expression),
-		lwd=c(2,2), col=c(2,4))
+		lwd=c(2,2), col=c("red","blue"))
 }
 
 # [9-6] Diagnose the Central Limit Theorem
@@ -542,14 +542,14 @@ testplot = function(z, d, mt, n) {
 	br = c(rev(seq(-d[j]/2, min(z[[j]])-d[j], by=-d[j])), seq(d[j]/2, max(z[[j]])+d[j], by=d[j]))
 	dum = hist(z[[j]], breaks=br, plot=FALSE)
 	ymax=max(0.4, dum$dens)
-    	hist(z[[j]], breaks=br, prob=T, xlim=c(-4,4), ylim=c(0, ymax), col=7, ylab="f(x)",
+    	hist(z[[j]], breaks=br, prob=T, xlim=c(-4,4), ylim=c(0, ymax), col="yellow", ylab="f(x)",
 		main=paste0(mt, "  n=", n[[j]]), xlab=NULL)
-    	curve(dnorm, -4, 4, lwd=2, col=2, add=T) }
+    	curve(dnorm, -4, 4, lwd=2, col="red", add=T) }
     # Normal probability plot with selected 100 points, using qqnorm( ) function
   	set.seed(47)
   	for (j in 1:m) { zss = sort(z[[j]])[(0:99)*100+50]
 		temp = qqnorm(zss, pch=19, cex=0.8)
-		abline(lm(temp$y ~ temp$x), lwd=2, col=2) }
+		abline(lm(temp$y ~ temp$x), lwd=2, col="red") }
 }
 
 # Verify the central limit theorem

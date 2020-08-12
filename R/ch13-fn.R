@@ -214,10 +214,10 @@ anova1.fit = function(y, f, xl, yl, alp=0.05, bplot=TRUE, plot=TRUE, dig=4) {
 	if (bplot) {
 	  cat(paste0("[P1] Box Plot of ", yl, " for each level of ", xl), "---------\n")
 	  win.graph(7,5)
-	  boxplot(y ~ af, col=7, main=paste0("Box Plot of ", yl, " for each level of ", xl),
+	  boxplot(y ~ af, col="yellow", main=paste0("Box Plot of ", yl, " for each level of ", xl),
 		xlab=paste("Level of", xl), ylab=yl)
-	  points(af, y, pch=19, col=2, cex=1.2)
-	  lines(1:m1, ym, type="b", lty=2, pch=17, col=4, cex=1.2)
+	  points(af, y, pch=19, col="red", cex=1.2)
+	  lines(1:m1, ym, type="b", lty=2, pch=17, col="blue", cex=1.2)
 	}
 
     # Calculate the sum of squares
@@ -364,24 +364,24 @@ anova1.conf = function(y, f, xl, yl, alp=0.05, plot=TRUE, dig=4) {
 	  y2 = ymax + 0.1*(ymax-ymin)
 
 	# Remove xlim and ylim !!
-	  plot(fnum, y, pch=19, col=3, cex=1.2, xaxt ="n",
+	  plot(fnum, y, pch=19, col="green", cex=1.2, xaxt ="n",
 		main=paste0((1-alp)*100, "% CI for the Mean of ", yl, " w.r.t. ", xl),
 		ylab=yl, xlab=xl, xlim=c(x1, x2), ylim=c(y1, y2))
-	  grid(col=3)
+	  grid(col="green")
 	  axis(1, at=1:m1, labels=levels(af))
 
     	# Lines connecting the means, the upper and lower limits
-	  lines(lev, ym, type="b", lty=2, pch=17, col=2, cex=1.2)
-	  lines(lev, lcl, type="b", lty=4, pch=18, col=4, cex=1.2)
-	  lines(lev, ucl, type="b", lty=4, pch=18, col=4, cex=1.2)
+	  lines(lev, ym, type="b", lty=2, pch=17, col="red", cex=1.2)
+	  lines(lev, lcl, type="b", lty=4, pch=18, col="blue", cex=1.2)
+	  lines(lev, ucl, type="b", lty=4, pch=18, col="blue", cex=1.2)
 
     	# Confidence intervals
 	  arrows(lev, lcl, lev, ucl, lwd=2, length=0.1, code=3, angle=90)
 
     	# Values of the means, the upper and lower limits
-	  text(lev, ym, labels=round(ym, 3), cex=0.9, col=2, pos=4)
-	  text(lev, lcl, labels=round(lcl, 3), cex=0.9, col=4, pos=4)
-	  text(lev, ucl, labels=round(ucl, 3), cex=0.9, col=4, pos=4)
+	  text(lev, ym, labels=round(ym, 3), cex=0.9, col="red", pos=4)
+	  text(lev, lcl, labels=round(lcl, 3), cex=0.9, col="blue", pos=4)
+	  text(lev, ucl, labels=round(ucl, 3), cex=0.9, col="blue", pos=4)
 	}
 }
 
@@ -508,7 +508,7 @@ anova1.diff = function(y, f, xl, yl, alp=0.05, plot=TRUE, dig=4) {
 	plot(ym2, type="n", xlim=c(0.5, n2+0.5), ylim=c(y1, y2),
 		main=paste0((1-alp)*100, "% CI for the Mean Differences of ", yl, " w.r.t. ", xl),
 		ylab=paste("Mean Differences of", yl), xlab=paste("Level Combinations of", xl), xaxt="n")
-	grid(col=3)
+	grid(col="green")
     	# Horizontal line of zero difference
 	abline(h=0, lty=2, col=grey(0.2))
 
@@ -517,14 +517,14 @@ anova1.diff = function(y, f, xl, yl, alp=0.05, plot=TRUE, dig=4) {
 	dcol[lcl2>0 | ucl2<0] = "orange"
 	arrows(1:n2, lcl2, 1:n2, ucl2, lwd=2, length=0.1, code=3, angle=90, col=dcol)
     	# Lines connecting the mean differences, the upper and lower limits
-	lines(1:n2, lcl2, type="b", pch=18, lty=2, col=4)
-	lines(1:n2, ucl2, type="b", pch=18, lty=2, col=4)
+	lines(1:n2, lcl2, type="b", pch=18, lty=2, col="blue")
+	lines(1:n2, ucl2, type="b", pch=18, lty=2, col="blue")
 
     	# Values of the mean differences, the upper and lower limits
-	text(1:n2, ym2, labels=round(ym2, 2), cex=0.9, col=2, pos=4)
+	text(1:n2, ym2, labels=round(ym2, 2), cex=0.9, col="red", pos=4)
 	text(1:n2, lcl2, labels=round(lcl2, 2), cex=0.9, col=1, pos=4)
 	text(1:n2, ucl2, labels=round(ucl2, 2), cex=0.9, col=1, pos=4)
-	lines(1:n2, ym2, type="b", pch=17, lty=2, col=2, cex=1.2)
+	lines(1:n2, ym2, type="b", pch=17, lty=2, col="red", cex=1.2)
 	# mtext(names(ym2), side=1, at=1:n2, col=1, line=0.5)
 	axis(1, at=1:n2, labels=names(ym2), las=ifelse(m1>5,2,1), cex.axis=ifelse(m1>4,0.8,1))
 	}
@@ -576,7 +576,7 @@ anova2.fit = function(y, f1, f2, xl1, xl2, yl, alp=0.05, iplot=TRUE, plot=TRUE, 
 	nb = nn/m2
 	nr = nn/(m1*m2)
 	if (nr == 1) inter=FALSE
-	if (m2<6) {dcol = c(1, 2, 4, "green4", "purple")
+	if (m2<6) {dcol = c("black", "red", "blue", "green4", "purple")
 	} else dcol = rainbow(m2)
     # Transform factor levels into factors by as.factor( ) function
 	if (is.factor(f1)) {af1 = f1
@@ -600,7 +600,7 @@ anova2.fit = function(y, f1, f2, xl1, xl2, yl, alp=0.05, iplot=TRUE, plot=TRUE, 
 	  interaction.plot(af1, af2, y, type="b", col=dcol[1:m2], lwd=2, leg.bg="white", leg.bty="o",
 		main=paste("Interaction Plot of", yl, "w.r.t.", xl1, "&", xl2),
 		xlab=xl1, ylab=paste0(yl, " mean"), trace.label = xl2)
-	  grid(col=3)
+	  grid(col="green")
 	}
     # Calculate the sum of squares
 	ysm1 = tapply(y, af1, sum)
@@ -777,7 +777,7 @@ anova2.conf = function(y, f1, f2, xl1, xl2, yl, alp=0.05, plot=TRUE,
 	m2 = length(levels(af2))
 	nr = nn/(m1*m2)
 	if (nr==1) inter=FALSE
-	if (m2<6) {dcol = c(1, 2, 4, "green4", "purple")
+	if (m2<6) {dcol = c("black", "red", "blue", "green4", "purple")
 	} else dcol = rainbow(m2)
 
     # Confidence interval of the response mean for each combination of factor levels
@@ -841,7 +841,7 @@ anova2.conf = function(y, f1, f2, xl1, xl2, yl, alp=0.05, plot=TRUE,
 	  plot(unique(af1), rep(-10000, m1), type="n",
 		main=paste0((1-alp)*100, "% CI for the Mean of ", yl, " w.r.t. ", xl1, " & ", xl2),
 		ylab=yl, xlab=xl1, xlim=c(x1, x2), ylim=c(y1, y2))
-	  grid(col=3)
+	  grid(col="green")
         # Lines connecting the means, the upper and lower limits
 	  del = (lev[m1]-lev[1])*0.01
 	  dv = del*(-(m2-1)/2):((m2-1)/2)
@@ -950,7 +950,7 @@ anova2.diff = function(y, f1, f2, xl1, xl2, yl, alp=0.05, plot=TRUE,
 	m2 = length(levels(af2))
 	nr = nn/(m1*m2)
 	if (nr==1) inter=FALSE
-	if (m2<6) {dcol = c(1, 2, 4, "green4", "purple")
+	if (m2<6) {dcol = c("black", "red", "blue", "green4", "purple")
 	} else dcol = rainbow(m2)
 
     # Mean square error and the tolerance of confidence intervals
@@ -1019,7 +1019,7 @@ anova2.diff = function(y, f1, f2, xl1, xl2, yl, alp=0.05, plot=TRUE,
 	  main=paste0((1-alp)*100, "% CI for the Mean Differences of ", yl, " w.r.t. ", xl1, " & ", xl2),
 	  ylab=paste("Mean Differences of", yl),
 	  xlab=paste("Best", nb, "Combinations of", xl1, "&", xl2), xaxt="n")
-	grid(col=3)
+	grid(col="green")
 
     	# Horizontal line of zero difference
 	abline(h=0, lty=2, col=grey(0.2))
@@ -1028,13 +1028,13 @@ anova2.diff = function(y, f1, f2, xl1, xl2, yl, alp=0.05, plot=TRUE,
 	dcol[lcl2>0 | ucl2<0] = "orange"
 	arrows(1:n2, lcl2, 1:n2, ucl2, lwd=2, length=0.1, code=3, angle=90, col=dcol)
     	# Lines connecting the mean differences, the upper and lower limits
-	lines(1:n2, lcl2, type="b", pch=18, lty=2, col=4)
-	lines(1:n2, ucl2, type="b", pch=18, lty=2, col=4)
+	lines(1:n2, lcl2, type="b", pch=18, lty=2, col="blue")
+	lines(1:n2, ucl2, type="b", pch=18, lty=2, col="blue")
     	# Values of the mean differences, the upper and lower limits
-	text(1:n2, ye2, labels=round(ye2, 2), cex=0.9, col=2, pos=4)
+	text(1:n2, ye2, labels=round(ye2, 2), cex=0.9, col="red", pos=4)
 	text(1:n2, lcl2, labels=round(lcl2, 2), cex=0.9, col=1, pos=4)
 	text(1:n2, ucl2, labels=round(ucl2, 2), cex=0.9, col=1, pos=4)
-	lines(1:n2, ye2, type="b", pch=17, lty=2, col=2, cex=1.2)
+	lines(1:n2, ye2, type="b", pch=17, lty=2, col="red", cex=1.2)
 	mtext(names(ye2), side=1, at=1:n2, col=1, line=0.5)
 	}
 	invisible(diffCI)
@@ -1075,10 +1075,10 @@ anova1 = function(y, f, xl="Factor", yl="Response Variable", step=0:7, alp=0.05,
 	if (1 %in% step) {
 	  cat(paste0("[Step 1] Box Plot of ", yl, " for each level of ", xl), "---------\n")
 	  win.graph(7,5)
-	  boxplot(y ~ af, col=7, main=paste0("Box Plot of ", yl, " for each level of ", xl),
+	  boxplot(y ~ af, col="yellow", main=paste0("Box Plot of ", yl, " for each level of ", xl),
 		xlab=paste("Level of", xl), ylab=yl)
-	  points(af, y, pch=19, col=2, cex=1.2)
-	  lines(1:m1, ym, type="b", lty=2, pch=17, col=4, cex=1.2)
+	  points(af, y, pch=19, col="red", cex=1.2)
+	  lines(1:m1, ym, type="b", lty=2, pch=17, col="blue", cex=1.2)
 	}
     # Analysis of variance
 	an1 = aov(y ~ af)
@@ -1132,24 +1132,24 @@ anova1 = function(y, f, xl="Factor", yl="Response Variable", step=0:7, alp=0.05,
 	  y2 = ymax + 0.1*(ymax-ymin)
 
 	# Remove xlim and ylim !!
-	  plot(fnum, y, pch=19, col=3, cex=1.2, xaxt ="n",
+	  plot(fnum, y, pch=19, col="green", cex=1.2, xaxt ="n",
 		main=paste0((1-alp)*100, "% CI for the Mean of ", yl, " w.r.t. ", xl),
 		ylab=yl, xlab=xl, xlim=c(x1, x2), ylim=c(y1, y2))
-	  grid(col=3)
+	  grid(col="green")
 	  axis(1, at=1:m1, labels=levels(af))
 
     	# Lines connecting the means, the upper and lower limits
-	  lines(lev, ym, type="b", lty=2, pch=17, col=2, cex=1.2)
-	  lines(lev, lcl, type="b", lty=4, pch=18, col=4, cex=1.2)
-	  lines(lev, ucl, type="b", lty=4, pch=18, col=4, cex=1.2)
+	  lines(lev, ym, type="b", lty=2, pch=17, col="red", cex=1.2)
+	  lines(lev, lcl, type="b", lty=4, pch=18, col="blue", cex=1.2)
+	  lines(lev, ucl, type="b", lty=4, pch=18, col="blue", cex=1.2)
 
     	# Confidence intervals
 	  arrows(lev, lcl, lev, ucl, lwd=2, length=0.1, code=3, angle=90)
 
     	# Values of the means, the upper and lower limits
-	  text(lev, ym, labels=round(ym, 3), cex=0.9, col=2, pos=4)
-	  text(lev, lcl, labels=round(lcl, 3), cex=0.9, col=4, pos=4)
-	  text(lev, ucl, labels=round(ucl, 3), cex=0.9, col=4, pos=4)
+	  text(lev, ym, labels=round(ym, 3), cex=0.9, col="red", pos=4)
+	  text(lev, lcl, labels=round(lcl, 3), cex=0.9, col="blue", pos=4)
+	  text(lev, ucl, labels=round(ucl, 3), cex=0.9, col="blue", pos=4)
 	}
 
     # Mean difference vector
@@ -1184,7 +1184,7 @@ anova1 = function(y, f, xl="Factor", yl="Response Variable", step=0:7, alp=0.05,
 	plot(ym2, type="n", xlim=c(0.5, n2+0.5), ylim=c(y1, y2),
 		main=paste0((1-alp)*100, "% CI for the Mean Differences of ", yl, " w.r.t. ", xl),
 		ylab=paste("Mean Differences of", yl), xlab=paste("Level Combinations of", xl), xaxt="n")
-	grid(col=3)
+	grid(col="green")
     	# Horizontal line of zero difference
 	abline(h=0, lty=2, col=grey(0.2))
 
@@ -1193,14 +1193,14 @@ anova1 = function(y, f, xl="Factor", yl="Response Variable", step=0:7, alp=0.05,
 	dcol[lcl2>0 | ucl2<0] = "orange"
 	arrows(1:n2, lcl2, 1:n2, ucl2, lwd=2, length=0.1, code=3, angle=90, col=dcol)
     	# Lines connecting the mean differences, the upper and lower limits
-	lines(1:n2, lcl2, type="b", pch=18, lty=2, col=4)
-	lines(1:n2, ucl2, type="b", pch=18, lty=2, col=4)
+	lines(1:n2, lcl2, type="b", pch=18, lty=2, col="blue")
+	lines(1:n2, ucl2, type="b", pch=18, lty=2, col="blue")
 
     	# Values of the mean differences, the upper and lower limits
-	text(1:n2, ym2, labels=round(ym2, 2), cex=0.9, col=2, pos=4)
+	text(1:n2, ym2, labels=round(ym2, 2), cex=0.9, col="red", pos=4)
 	text(1:n2, lcl2, labels=round(lcl2, 2), cex=0.9, col=1, pos=4)
 	text(1:n2, ucl2, labels=round(ucl2, 2), cex=0.9, col=1, pos=4)
-	lines(1:n2, ym2, type="b", pch=17, lty=2, col=2, cex=1.2)
+	lines(1:n2, ym2, type="b", pch=17, lty=2, col="red", cex=1.2)
 	# mtext(names(ym2), side=1, at=1:n2, col=1, line=0.5)
 	axis(1, at=1:n2, labels=names(ym2), las=ifelse(m1>5,2,1), cex.axis=ifelse(m1>4,0.8,1))
 	}
@@ -1242,7 +1242,7 @@ anova2 = function(y, f1, f2, xl1, xl2, yl, step=0:7, alp=0.05,
 	m1 = length(unique(f1))
 	m2 = length(unique(f2))
 	nr = nn/(m1*m2)
-	if (m2<6) {dcol = c(1, 2, 4, "green4", "purple")
+	if (m2<6) {dcol = c("black", "red", "blue", "green4", "purple")
 	} else dcol = rainbow(m2)
     # Transform factor levels into factors by as.factor( ) function
 	if (is.factor(f1)) {af1 = f1
@@ -1265,7 +1265,7 @@ anova2 = function(y, f1, f2, xl1, xl2, yl, step=0:7, alp=0.05,
 	  interaction.plot(af1, af2, y, type="b", col=dcol[1:m2], lwd=2, leg.bg="white", leg.bty="o",
 		main=paste("Interaction Plot of", yl, "w.r.t.", xl1, "&", xl2),
 		xlab=xl1, ylab=paste0(yl, " mean"), trace.label = xl2)
-	  grid(col=3)
+	  grid(col="green")
 	}
     # Analysis of variance
 	if (inter) {an2 = aov(y ~ af1 * af2)
@@ -1350,7 +1350,7 @@ anova2 = function(y, f1, f2, xl1, xl2, yl, step=0:7, alp=0.05,
 	  plot(unique(af1), rep(-10000, m1), type="n",
 		main=paste0((1-alp)*100, "% CI for the Mean of ", yl, " w.r.t. ", xl1, " & ", xl2),
 		ylab=yl, xlab=xl1, xlim=c(x1, x2), ylim=c(y1, y2))
-	  grid(col=3)
+	  grid(col="green")
         # Lines connecting the means, the upper and lower limits
 	  del = (lev[m1]-lev[1])*0.01
 	  dv = del*(-(m2-1)/2):((m2-1)/2)
@@ -1398,7 +1398,7 @@ anova2 = function(y, f1, f2, xl1, xl2, yl, step=0:7, alp=0.05,
 	  main=paste0((1-alp)*100, "% CI for the Mean Differences of ", yl, " w.r.t. ", xl1, " & ", xl2),
 	  ylab=paste("Mean Differences of", yl),
 	  xlab=paste("Best", nb, "Combinations of", xl1, "&", xl2), xaxt="n")
-	grid(col=3)
+	grid(col="green")
 
     	# Horizontal line of zero difference
 	abline(h=0, lty=2, col=grey(0.2))
@@ -1407,13 +1407,13 @@ anova2 = function(y, f1, f2, xl1, xl2, yl, step=0:7, alp=0.05,
 	dcol[lcl2>0 | ucl2<0] = "orange"
 	arrows(1:n2, lcl2, 1:n2, ucl2, lwd=2, length=0.1, code=3, angle=90, col=dcol)
     	# Lines connecting the mean differences, the upper and lower limits
-	lines(1:n2, lcl2, type="b", pch=18, lty=2, col=4)
-	lines(1:n2, ucl2, type="b", pch=18, lty=2, col=4)
+	lines(1:n2, lcl2, type="b", pch=18, lty=2, col="blue")
+	lines(1:n2, ucl2, type="b", pch=18, lty=2, col="blue")
     	# Values of the mean differences, the upper and lower limits
-	text(1:n2, ye2, labels=round(ye2, 2), cex=0.9, col=2, pos=4)
+	text(1:n2, ye2, labels=round(ye2, 2), cex=0.9, col="red", pos=4)
 	text(1:n2, lcl2, labels=round(lcl2, 2), cex=0.9, col=1, pos=4)
 	text(1:n2, ucl2, labels=round(ucl2, 2), cex=0.9, col=1, pos=4)
-	lines(1:n2, ye2, type="b", pch=17, lty=2, col=2, cex=1.2)
+	lines(1:n2, ye2, type="b", pch=17, lty=2, col="red", cex=1.2)
 	mtext(names(ye2), side=1, at=1:n2, col=1, line=0.5)
 	}
 }

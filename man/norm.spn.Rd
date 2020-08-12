@@ -29,6 +29,6 @@ Minimum Number of Samples from Normal Population
 }
 \examples{
 alp = c(0.01, 0.05, 0.1)
-dcol = c(2, 4, "green4")
+dcol = c("red", "blue", "green4")
 norm.spn(kp=0.4, alp, dcol=dcol)
 }

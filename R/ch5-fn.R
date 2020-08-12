@@ -125,19 +125,19 @@ disc.exp = function(xv, xf, mt, dig=3, prt=TRUE, plot=FALSE, pos="topright") {
 	x2 = max(xv)
 	xr = x2 - x1
 	plot(xv, xp, type="h", main=mt, pch=19, lwd=5, ylim=c(0, max(xp)*1.1),
-		xlim=c(x1-0.1*xr, x2+0.1*xr), col=2, xlab="x", ylab="f(x)")
-	grid(col=3)
+		xlim=c(x1-0.1*xr, x2+0.1*xr), col="red", xlab="x", ylab="f(x)")
+	grid(col="green")
 	# Display probability
-	text(xv, xp, round(xp, dig), pos=3, col=4, cex=0.8)
+	text(xv, xp, round(xp, dig), pos=3, col="blue", cex=0.8)
 	# Display the expected value
 	ym = 0.5*max(xp)
-	segments(ex, 0, ex, ym, lty=2, col=4)
-	text(ex, ym, paste0("E(", Xn, ")=",round(ex, dig)), pos=3, col=4)
+	segments(ex, 0, ex, ym, lty=2, col="blue")
+	text(ex, ym, paste0("E(", Xn, ")=",round(ex, dig)), pos=3, col="blue")
 	# Display thestandard deviation
 	x1 = ex - dx
 	x2 = ex + dx
-	arrows(ex, ym, x2, ym, length=0.1, lty=2, col=4)
-	arrows(ex, ym, x1, ym, length=0.1, lty=2, col=4)
+	arrows(ex, ym, x2, ym, length=0.1, lty=2, col="blue")
+	arrows(ex, ym, x1, ym, length=0.1, lty=2, col="blue")
 	# Display legend
 	legend(pos, c(paste0("E(", Xn, ") = ",round(ex,dig)),
 		paste0("D(", Xn, ") = ", round(dx,dig))), bg="white")
@@ -206,9 +206,9 @@ disc.jexp = function(tabXY, Xn="X", Yn="Y", prt="exp", pprt=FALSE, dig=4) {
 	}
     # Print the expected values
 	if (prt %in% c("exp", "cov", "cor")) {
-		cat(paste0("E[X] = ", Sx, "/", N, " = ", round(Ex, dig)), "\n")
-		cat(paste0("E[Y] = ", Sy, "/", N, " = ", round(Ey, dig)), "\n")
-		cat(paste0("E[XY] = ", Sxy, "/", N, " = ", round(Exy, dig)), "\n")
+		cat(paste0("E(X) = ", Sx, "/", N, " = ", round(Ex, dig)), "\n")
+		cat(paste0("E(Y) = ", Sy, "/", N, " = ", round(Ey, dig)), "\n")
+		cat(paste0("E(XY) = ", Sxy, "/", N, " = ", round(Exy, dig)), "\n")
 	}
 	if (prt %in% c("cov", "cor")) {
 		cat(paste0("Var(X) = ", Sx2, "/", N, " - ", round(abs(Ex),dig), "\U00B2 = ", round(Vx,dig)), "\n")
@@ -409,9 +409,9 @@ corr.plot = function(X, Mt, item, dig=4, prt=TRUE, pprt=FALSE, plot=FALSE) {
 	win.graph(w, h)
 	par(mfrow=c(nr, nc))
 	for (k in 1:(nv-1)) for (m in (k+1):nv) {
-		plot(X[[m]], X[[k]], pch=19, col=4, main=St[k, m],
+		plot(X[[m]], X[[k]], pch=19, col="blue", main=St[k, m],
 		xlab=item[m], ylab=item[k])
-		abline(lm(X[[k]]~X[[m]]), col=2)
+		abline(lm(X[[k]]~X[[m]]), col="red")
 	}
       }
 }

@@ -4,7 +4,7 @@
 \alias{norm.diag}
 \title{Diagnosis of Normality}
 \usage{
-norm.diag(x, xrng, by = 1, dig = 4, dc = c("cyan", 2, 4))
+norm.diag(x, xrng, by = 1, dig = 4, dc = c("cyan", "red", "blue"))
 }
 \arguments{
 \item{x}{Data vector}
@@ -15,7 +15,7 @@ norm.diag(x, xrng, by = 1, dig = 4, dc = c("cyan", 2, 4))
 
 \item{dig}{Number of digits below the decimal point, Default: 4}
 
-\item{dc}{Color vector, Default: c("cyan", 2, 4)}
+\item{dc}{Color vector, Default: c("cyan", "red", "blue")}
 }
 \value{
 None.

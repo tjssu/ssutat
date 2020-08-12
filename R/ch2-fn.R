@@ -60,14 +60,14 @@ ch2.man = function(fn=0) {
     }
     if (4 %in% fn) {
 	cat("[4] Draw Scatter Plots of Six Cases\n")
-	cat("corr.plot6(m1 = 60, s1=10, m2=60, s2=10, r=0.7, r2=0.8, n=50)\n")
+	cat("corr.plot6(m1 = 60, s1=10, m2=60, s2=10, r=0.7, r2=-0.8, n=50)\n")
 	cat("[Optional Input]--------------------------\n")
 	cat("m1 \t Mean of x (default= 60)\n")
 	cat("s1  \t Standard deviation of x (default=10)\n")
 	cat("m2 \t Mean of y (default=60)\n")
 	cat("s2 \t Standard deviation of y (default=10)\n")
 	cat("r   \t Correlation coefficient of x and y (default=0.7)\n")
-	cat("r2  \t Correlation coefficient of the stratified sample (default=0.8)\n")
+	cat("r2  \t Correlation coefficient of the stratified sample (default=-0.8)\n")
 	cat("n   \t Number of data pairs (default=50)\n")
     }
     if (5 %in% fn) {
@@ -245,12 +245,12 @@ strat.hist = function(ng=3, n=200, m=2+4*1:ng, s=1, sp=c(min(m)-2, max(m)+2), vc
 		ylab="", xlab="", xlim=xl, col=vc[1])
 
 	brk = xh$breaks
-	segments(sp, 0, sp, ym/2, lwd=2, col=2)
-	text(sp, c(ym/2,ym/2), c("SL", "SU"), col=2, pos=3)
+	segments(sp, 0, sp, ym/2, lwd=2, col="red")
+	text(sp, c(ym/2,ym/2), c("SL", "SU"), col="red", pos=3)
 	for (k in 1:ng) {hist(x[[k]], breaks=brk, main=mt[k], probability=prob,
 		ylab="", xlab="", ylim=c(0,ym), xlim=xl, col=vc[k+1])
-		segments(sp, 0, sp, ym/2, lwd=2, col=2)
-		text(sp, c(ym,ym)/2, c("SL", "SU"), col=2, pos=3) }
+		segments(sp, 0, sp, ym/2, lwd=2, col="red")
+		text(sp, c(ym,ym)/2, c("SL", "SU"), col="red", pos=3) }
 }
 
 # [2-4] Draw Scatter Plots of Six Cases
@@ -306,32 +306,32 @@ corr.plot6 = function(m1 = 60, s1=10, m2=60, s2=10, r=0.7, r2=-0.8, n=50) {
     # positive correlation
 	plot(d1[[1]],d1[[2]], pch=19, cex=1.2, xlab="(a) Positive Correlation", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	abline(lm(d1[[2]]~d1[[1]]), lwd=2, lty=2, col=2)
+	abline(lm(d1[[2]]~d1[[1]]), lwd=2, lty=2, col="red")
     # negative correlation
 	plot(d2[[1]],d2[[2]], pch=19, cex=1.2, xlab="(b) Negative Correlation", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	abline(lm(d2[[2]]~d2[[1]]), lwd=2, lty=2, col=2)
+	abline(lm(d2[[2]]~d2[[1]]), lwd=2, lty=2, col="red")
     # little correlation
 	plot(d4[[1]],d4[[2]], pch=19, cex=1.2, xlab="(c) Little Correlation", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	abline(lm(d4[[2]]~d4[[1]]), lwd=2, lty=2, col=2)
+	abline(lm(d4[[2]]~d4[[1]]), lwd=2, lty=2, col="red")
     # quadratic relation
 	plot(d3[[1]],d3[[2]], pch=19, cex=1.2, xlab="(d) Quadratic Relation", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	abline(lm(d3[[2]]~d3[[1]]), lwd=2, lty=2, col=2)
+	abline(lm(d3[[2]]~d3[[1]]), lwd=2, lty=2, col="red")
     # outlier
 	o1 = c(d1[[1]][1:(n-2)], m1-2*s1, m1+2*s1)
 	o2 = c(d1[[2]][1:(n-2)], m2+2*s2, m2-2*s2)
 	plot(o1, o2, pch=19, cex=1.2, xlab="(e) Outlier", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	points(c(m1-2*s1, m1+2*s1), c(m2+2*s2, m2-2*s2), pch=0, cex=2, col=2)
-	abline(lm(o2~o1), lwd=2, lty=2, col=2)
+	points(c(m1-2*s1, m1+2*s1), c(m2+2*s2, m2-2*s2), pch=0, cex=2, col="red")
+	abline(lm(o2~o1), lwd=2, lty=2, col="red")
     # stratification
 	plot(d8[[1]],d8[[2]], pch=19, cex=1.2, xlab="(f) Stratification", cex.lab=1.5,
 		ylab="", xlim=c(x1, x2), ylim=c(y1, y2))
-	abline(lm(d8[[2]]~d8[[1]]), lwd=2, lty=2, col=2)
-	abline(lm(d81[[2]]~d81[[1]]), lwd=2, lty=2, col=4)
-	abline(lm(d82[[2]]~d82[[1]]), lwd=2, lty=2, col=4)
+	abline(lm(d8[[2]]~d8[[1]]), lwd=2, lty=2, col="red")
+	abline(lm(d81[[2]]~d81[[1]]), lwd=2, lty=2, col="blue")
+	abline(lm(d82[[2]]~d82[[1]]), lwd=2, lty=2, col="blue")
 }
 
 # [2-5] Draw a Scatter Plot with a Regression Line
@@ -362,11 +362,11 @@ scat.lm = function(x, y, mt, xl, yl, w=c(7, 5), ...) {
 	win.graph(w[1], w[2])
     # simple scatter plot --> plot(x, y) function
 	plot(x, y, main=mt, xlab=xl, ylab=yl, pch=19, cex=1.2, ...)
-	grid(col=3)
+	grid(col="green")
     # fitted simple regression line --> lm(y ~ x) function & abline( ) function
 	sr = lm(y ~ x)
 	ssr = summary(sr)
-	abline(sr, lty=2, lwd=2, col=2)
+	abline(sr, lty=2, lwd=2, col="red")
     # formula of fitted simple regression equation
 	b = sr$coef[[2]]
 	a = sr$coef[[1]]
@@ -376,7 +376,7 @@ scat.lm = function(x, y, mt, xl, yl, w=c(7, 5), ...) {
 	legend(pos, legend=c(paste("Y =", round(a, 4), sign, round(b, 4), "X"),
 		paste("R-sq =", round(ssr$r.sq, 4)),
 		paste("P-v =", format(pv, digits=3, scientific=T)) ),
-		text.col=c(2, 4, 1), cex=1)
+		text.col=c("red", "blue", "black"), cex=1)
 	invisible(sr)
 }
 
@@ -536,7 +536,7 @@ mult.hist = function(df, br, mt, xl, vcol, ...) {
 	if (missing(xl)) {myxl=names(df)
 	} else { myxl=xl }
 
-	if (missing(vcol)) {mycol=rep(NULL,ng)
+	if (missing(vcol)) {mycol=NULL
 	} else { mycol=vcol }
 
 	wc=c(1,2,3,2,3, 3,4,4,3,4, 4,4,4,4,4, 4,5,5,5,5)
@@ -617,15 +617,15 @@ strat.hist2 = function(df, cdep, cfac, spec, br, vc, prob=FALSE) {
 	hist(x, breaks=nb1, main=names(df)[cdep], probability=prob,
 		ylab="", xlab="", xlim=xl, col=vc[1])
 	if (!missing(spec)) {
-		segments(spec, 0, spec, ymax/2, lwd=2, col=2)
-		text(spec, c(ymax/2,ymax/2), c("SL", "SU"), col=2, pos=3)
+		segments(spec, 0, spec, ymax/2, lwd=2, col="red")
+		text(spec, c(ymax/2,ymax/2), c("SL", "SU"), col="red", pos=3)
 	}
 
          # making stratified histograms
 	for (k in 1:ng) {hist(x[fac==gname[k]], breaks=brk, main=gname[k], probability=prob,
 		ylab="", xlab="", ylim=c(0, ymax), xlim=xl, col=vc[k+1])
 		if (!missing(spec)) {
-		  segments(spec, 0, spec, ymax/2, lwd=2, col=2)
-		  text(spec, c(ymax, ymax)/2, c("SL", "SU"), col=2, pos=3) }
+		  segments(spec, 0, spec, ymax/2, lwd=2, col="red")
+		  text(spec, c(ymax, ymax)/2, c("SL", "SU"), col="red", pos=3) }
 	}
 }

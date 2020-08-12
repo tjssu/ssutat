@@ -325,7 +325,7 @@ mcorr = function(X, item, xl, yl, mt, plot=TRUE, dig=4) {
 	par(mfrow=c(nr, nc))
 	for (k in 1:nv) {
   		plot(X[[k]][,1], X[[k]][,2], pch=19, main=mt[k], xlab=xl, ylab=yl)
-  		abline(lm(X[[k]][,2]~X[[k]][,1]), lty=2, col=2)  }
+  		abline(lm(X[[k]][,2]~X[[k]][,1]), lty=2, col="red")  }
       }
     # Estimate correlation coefficients by utilizing cor( ) function
 	cat("[1] Estimate correlation coefficients -----------------\n")
@@ -478,8 +478,8 @@ reg1.pre = function(x, y, xl, yl, mt, plot=TRUE, dig=4) {
 	y1 = floor(min(y, lm1$fit))
 	y2 = ceiling(max(y, lm1$fit))
 	plot(x, y, pch=19, main=mt, xlab=xl, ylab=yl, ylim=c(y1, y2))
-	grid(col=3)
-	abline(lm1, col=2)
+	grid(col="green")
+	abline(lm1, col="red")
       }
 }
 
@@ -616,17 +616,17 @@ reg1.plot = function(x, y, xl, yl, mt, pres=TRUE, dig=4) {
 	cat("Display the simple regression line ------------------------\n")
 	win.graph(7, 5)
 	plot(x, y, pch=19, main=mt, xlab=xl, ylab=yl, ylim=c(y1, y2))
-	grid(col=3)
-	abline(lm1, lty=2, col=2)
+	grid(col="green")
+	abline(lm1, lty=2, col="red")
 
     	# Plot regression equation
 	pos = ifelse(lm1$coef[[2]]>0, "bottomright", "upright")
 	sign =  ifelse(lm1$coef[[2]]>0, "+", "")
 	legend(pos, c("Regression Equation", paste0("Y = ", round(lm1$coef[[1]],dig), sign,
-		round(lm1$coef[[2]],dig), " * X")), text.col=c(1,4), bg="white")
+		round(lm1$coef[[2]],dig), " * X")), text.col=c("black","blue"), bg="white")
     	# Plot residuals
-	segments(x, y, x, lm1$fit, lty=2, col=4)
-	if (pres) text(x, (y+lm1$fit)/2, labels="e", col=4, pos=4)
+	segments(x, y, x, lm1$fit, lty=2, col="blue")
+	if (pres) text(x, (y+lm1$fit)/2, labels="e", col="blue", pos=4)
 }
 
 
@@ -957,11 +957,11 @@ reg1.pred = function(x, y, xl, yl, mt, plot=FALSE, x0, xrng, by, alp=0.05, dig=4
 	plot(x, y, pch=19, main=paste("Confidence and Prediction Bands of", yl, "given", xl),
 		xlab=xl, ylab=yl, ylim=c(ymin, ymax), xlim=xrng)
 	# Regression line, confidence band, and prediction band
-	abline(lm1, col=4)
-	abline(v=xb, lty=2, col=3)
+	abline(lm1, col="blue")
+	abline(v=xb, lty=2, col="green")
 	text(xb, ymin, labels=expression(bar(x)), pos=4)
-	matlines(nd$x, conf2[,c("lwr","upr")], col=2, type="p", pch="+")
-	matlines(nd$x, pred2[,c("lwr","upr")], col=4, type="p", pch=1)
+	matlines(nd$x, conf2[,c("lwr","upr")], col="red", type="p", pch="+")
+	matlines(nd$x, pred2[,c("lwr","upr")], col="blue", type="p", pch=1)
 	abline(v=x0, lty=2, col="orange")
 	text(x0, ymin, labels=expression(x[0]), cex=0.9, col="green4", pos=4)
 	text(x0, Ex0+c(-ptol, 0, ptol), labels=round(Ex0+c(-ptol, 0, ptol), dig),
@@ -1031,7 +1031,7 @@ panel.cor = function(x, y, alp=0.05, digits = 4, prefix = "", cex.cor, ...)
     txt = paste0(prefix, txt)
     if(missing(cex.cor)) cex.cor = 0.5/strwidth(txt)
     cc2 = cex.cor*0.8
-    text(0.5, 0.6, format(cxy, F, digits), col=ifelse(cxy>0, 2, 4), cex = cex.cor)
+    text(0.5, 0.6, format(cxy, F, digits), col=ifelse(cxy>0, "red", "blue"), cex = cex.cor)
     pv = cor.test(x, y, conf.level =1-alp)$p.val
     text(0.5, 0.3, paste0("P-v=", format(pv, F, digits)), cex = cc2, col=1)
 }
@@ -1408,13 +1408,13 @@ mreg.pred = function(form, newd, pvx=1, xrng, nx=50, plot=F, alp=0.05, dig=4) {
 	plot(xd[[pvx]], y, pch=19, cex=1.2, main=paste("Confidence and Prediction Bands of ",
 		yl, "given", xl[pvx]), xlab=xl[pvx], ylab=yl, xlim=xrng2, ylim=c(ymin, ymax))
 	lines(ndat[[pvx]], conf1[,1], lty=2, col="purple")
-	abline(v=c(xrng[1], xb[pvx], xrng[2]), lty=2, col=3)
+	abline(v=c(xrng[1], xb[pvx], xrng[2]), lty=2, col="green")
 	text(xb[pvx], ymin, labels=expression(bar(x)), pos=4)
 	text(xrng,  ymin, round(xrng, dig), cex=0.8)
-	matlines(ndat[[pvx]], conf1[,c("lwr","upr")],col=2, lty=1,type="b",pch="+")
-	matlines(ndat[[pvx]], pred1[,c("lwr","upr")],col=4, lty=2,type="b",pch=1)
-	text(xrng[1], conf1[1,], labels=format(conf1[1,], digit=4), cex=0.8, col=2, pos=c(1,1,3))
-	text(xrng[2], conf1[nx,], labels=format(conf1[nx,], digit=4), cex=0.8, col=2, pos=c(1,1,3))
+	matlines(ndat[[pvx]], conf1[,c("lwr","upr")],col="red", lty=1,type="b",pch="+")
+	matlines(ndat[[pvx]], pred1[,c("lwr","upr")],col="blue", lty=2,type="b",pch=1)
+	text(xrng[1], conf1[1,], labels=format(conf1[1,], digit=4), cex=0.8, col="red", pos=c(1,1,3))
+	text(xrng[2], conf1[nx,], labels=format(conf1[nx,], digit=4), cex=0.8, col="red", pos=c(1,1,3))
       }
 }
 
@@ -1478,9 +1478,9 @@ mreg.two = function(form1, form2, plot=FALSE, detail=FALSE, wh=c(1:3,5), alp=0.0
 	win.graph(2.5*nwh, 5)
 	par(mfrow=c(2,nwh))
 	plot(lm1, which=wh)
-	title(main="Model 1", col.main=4)
+	title(main="Model 1", col.main="blue")
 	plot(lm2, which = wh)
-	title(main="Model 2", col.main=4)
+	title(main="Model 2", col.main="blue")
       }
 }
 
@@ -1522,7 +1522,7 @@ corr.mplot = function(X, item, xl, yl, mt, step=1:4, alp=0.05, dig=4) {
 	par(mfrow=c(nr, nc))
 	for (k in 1:nv) {
   		plot(X[[k]][,1], X[[k]][,2], pch=19, main=mt[k], xlab=xl, ylab=yl)
-  		abline(lm(X[[k]][,2]~X[[k]][,1]), lty=2, col=2)  }
+  		abline(lm(X[[k]][,2]~X[[k]][,1]), lty=2, col="red")  }
       }
     # Estimate correlation coefficients by utilizing cor( ) function
       if (2 %in% step) {
@@ -1607,7 +1607,7 @@ corr.reg1 = function(x, y, r0=0, xl, yl, mt, step=1:4, x0, xrng, by, alp=0.05, d
 	y1 = floor(min(y, lm1$fit))
 	y2 = ceiling(max(y, lm1$fit))
 	plot(x, y, pch=19, main=mt, xlab=xl, ylab=yl, ylim=c(y1, y2))
-	grid(col=3)
+	grid(col="green")
       }
     # Estimate correlation coefficients  by cor( ) function
 	Sxx = sum(x^2)-sum(x)^2/nn
@@ -1672,16 +1672,16 @@ corr.reg1 = function(x, y, r0=0, xl, yl, mt, step=1:4, x0, xrng, by, alp=0.05, d
 	cat("[Step 6] Display the simple regression line ------------------------\n")
 	win.graph(7, 5)
 	plot(x, y, pch=19, main=mt, xlab=xl, ylab=yl, ylim=c(y1, y2))
-	grid(col=3)
-	abline(lm1, lty=2, col=2)
+	grid(col="green")
+	abline(lm1, lty=2, col="red")
     	# Plot regression equation
 	pos = ifelse(lm1$coef[[2]]>0, "bottomright", "upright")
 	sign =  ifelse(lm1$coef[[2]]>0, "+", "")
 	legend(pos, c("Regression Equation", paste0("Y = ", round(lm1$coef[[1]], dig), sign,
-		round(lm1$coef[[2]], dig), " * X")), text.col=c(1,4), bg="white")
+		round(lm1$coef[[2]], dig), " * X")), text.col=c("black","blue"), bg="white")
     	# Plot residuals
-	segments(x, y, x, lm1$fit, lty=2, col=4)
-	text(x, (y+lm1$fit)/2, labels="e", col=4, pos=4)
+	segments(x, y, x, lm1$fit, lty=2, col="blue")
+	text(x, (y+lm1$fit)/2, labels="e", col="blue", pos=4)
       }
     # Detailed output of regression equation
       if (any(7:11 %in% step)) {
@@ -1803,11 +1803,11 @@ corr.reg1 = function(x, y, r0=0, xl, yl, mt, step=1:4, x0, xrng, by, alp=0.05, d
 	plot(x, y, pch=19, main=paste("Confidence and Prediction Bands of", yl, "given", xl),
 		xlab=xl, ylab=yl, ylim=c(ymin, ymax), xlim=xrng)
 	# Regression line, confidence band, and prediction band
-	abline(lm1, col=4)
-	abline(v=xb, lty=2, col=3)
+	abline(lm1, col="blue")
+	abline(v=xb, lty=2, col="green")
 	text(xb, ymin, labels=expression(bar(x)), pos=4)
-	matlines(nd$x, conf2[,c("lwr","upr")], col=2, type="p", pch="+")
-	matlines(nd$x, pred2[,c("lwr","upr")], col=4, type="p", pch=1)
+	matlines(nd$x, conf2[,c("lwr","upr")], col="red", type="p", pch="+")
+	matlines(nd$x, pred2[,c("lwr","upr")], col="blue", type="p", pch=1)
 	abline(v=x0, lty=2, col="orange")
 	text(x0, ymin, labels=expression(x[0]), cex=0.9, col="green4", pos=4)
 	text(x0, Ex0+c(-ptol, 0, ptol), labels=format(Ex0+c(-ptol, 0, ptol), digit=dig),
@@ -1834,9 +1834,9 @@ panel.cor = function(x, y, alp=0.05, digits = 4, prefix = "", cex.cor, ...)
     txt = format(c(r, 0.123456789), digits = digits)[1]
     txt = paste0(prefix, txt)
     if(missing(cex.cor)) cex.cor = 0.5/strwidth(txt)
-    text(0.5, 0.6, txt, col=ifelse(cxy>0, 2, 4), cex = cex.cor)
+    text(0.5, 0.6, txt, col=ifelse(cxy>0, "red", "blue"), cex = cex.cor)
     pv = cor.test(x, y, conf.level =1-alp)$p.val
-    text(0.5, 0.4, paste("P-v =", round(pv, digits)), cex = 1.7, col=4)
+    text(0.5, 0.4, paste("P-v =", round(pv, digits)), cex = 1.7, col="blue")
 }
 
 # Multiple Regression Analysis
@@ -2102,10 +2102,10 @@ corr.mreg = function(xd, y, form, xd2, form2, step=0:4, newd, pvx, xrng, nx, alp
 	plot(xd[[pvx]], y, pch=19, cex=1.2, main=paste("Confidence and Prediction Bands of ",
 		yl, "given", xl[pvx]), xlab=xl[pvx], ylab=yl, xlim=xrng, ylim=c(ymin, ymax))
 	lines(ndat[[pvx]], conf1[,1], lty=2, col="purple")
-	abline(v=xb[pvx], lty=2, col=3)
+	abline(v=xb[pvx], lty=2, col="green")
 	text(xb[pvx], ymin, labels=expression(bar(x)), pos=4)
-	matlines(ndat[[pvx]], conf1[,c("lwr","upr")],col=2, lty=1,type="b",pch="+")
-	matlines(ndat[[pvx]], pred1[,c("lwr","upr")],col=4, lty=2,type="b",pch=1)
+	matlines(ndat[[pvx]], conf1[,c("lwr","upr")],col="red", lty=1,type="b",pch="+")
+	matlines(ndat[[pvx]], pred1[,c("lwr","upr")],col="blue", lty=2,type="b",pch=1)
 	text(xrng[2], conf1[nx,], labels=format(conf1[nx,], digit=4), pos=c(1,1,3))
       }
 }

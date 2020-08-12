@@ -8,13 +8,13 @@ meanchar.plot(mu0, mu1, sig, nv, alp = 0.05, prng, side = "two", mt,
   dig = 4)
 }
 \arguments{
-\item{mu0}{Population mean value under the null hypothesis}
+\item{mu0}{Population mean value under the null hypothesis, Default: 0}
 
-\item{mu1}{Vector of population mean values for which the power should be calculated}
+\item{mu1}{Alternative population mean values, Default: NULL}
 
-\item{sig}{Population standard deviation}
+\item{sig}{Population standard deviation, Default: 1}
 
-\item{nv}{Sample size vector}
+\item{nv}{Sample size vector, Default: c(10,30,50,100)}
 
 \item{alp}{Level of significance, Default: 0.05}
 

@@ -29,7 +29,7 @@ ch15.man = function(fn=0) {
     }
     if (1 %in% fn) {
 	cat("[1] Investigate the Normality of Data\n")
-	cat("norm.diag(x, xrng, by=1, dig=4, dc=c(\"cyan\", 2, 4))\n")
+	cat("norm.diag(x, xrng, by=1, dig=4, dc=c(\"cyan\", \"red\", \"blue\"))\n")
 	cat("[Mandatory Input]--------------------------\n")
 	cat("x\t Data vector\n")
 	cat("[Optional Input]--------------------------\n")
@@ -165,7 +165,7 @@ ch15.man = function(fn=0) {
 #' @param xrng Range of x-axis, Default: c(mean-3stdev, mean+3stdev)
 #' @param by Histogram class interval, Default: 1
 #' @param dig Number of digits below the decimal point, Default: 4
-#' @param dc Color vector, Default: c("cyan", 2, 4)
+#' @param dc Color vector, Default: c("cyan", "red", "blue")
 #' @return None.
 #'
 #' @examples
@@ -178,7 +178,7 @@ ch15.man = function(fn=0) {
 #' norm.diag(y)
 #' @rdname norm.diag
 #' @export
-norm.diag = function(x, xrng, by=1, dig=4, dc=c("cyan",2,4)) {
+norm.diag = function(x, xrng, by=1, dig=4, dc=c("cyan","red","blue")) {
     # Set the range of x-axis
 	xm = mean(x)
 	xs = sd(x)
@@ -197,7 +197,7 @@ norm.diag = function(x, xrng, by=1, dig=4, dc=c("cyan",2,4)) {
 	lines(xax, dnorm(xax, xm, xs), lwd=2, col=dc[3])
     # Normal probability plot
 	qqnorm(x, pch=19, xlab="Theoretical Quantile", ylab="Sample Quantile")
-	grid(col=3)
+	grid(col="green")
 	qqline(x, col=dc[2])
     # Test of normality (Shapiro-Wilk's Test)
 	shap = shapiro.test(x)
@@ -258,28 +258,28 @@ signtest.plot = function(x, mu0=0, side="two", dig=4) {
 	plot(xa, pdf, type="n", xlab="Sign Statistic (positive sign)", ylab="f(x)", ylim=c(ymin, ymax),
 		main=paste0("Distribution of Sign Teat Statistic (n=", n, ")"))
       # Normal approximation
-	lines(xca, dnorm(xca, mu, sig), col=4)
+	lines(xca, dnorm(xca, mu, sig), col="blue")
 	abline(h=0)
       # Distribution of the test statistic
 	lines(xa, dbinom(xa, n, 0.5), type="h", lwd=7, col=grey(0.5))
       # Central location
-	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col=2)
-	text(mu, ymin/2, labels=mu, col=4)
+	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col="red")
+	text(mu, ymin/2, labels=mu, col="blue")
       # Critical value
-	segments(np, 0, np, dbinom(np, n, 0.5), lwd=2, col=2)
-	text(np, dbinom(np, n, 0.5), labels=np, col=2, pos=3)
+	segments(np, 0, np, dbinom(np, n, 0.5), lwd=2, col="red")
+	text(np, dbinom(np, n, 0.5), labels=np, col="red", pos=3)
       # P-value
 	if (any(grepl(side, c("up", "greater")))) {
-		lines(np:n, dbinom(np:n, n, 0.5),  type="h", col=2, lwd=7)
-		text(n, ymin/2, labels=paste0("pv=", round(pv, 4)), col=4, pos=2)
+		lines(np:n, dbinom(np:n, n, 0.5),  type="h", col="red", lwd=7)
+		text(n, ymin/2, labels=paste0("pv=", round(pv, 4)), col="blue", pos=2)
 	} else if (any(grepl(side, c("low", "less")))) {
-		lines(0:np, dbinom(0:np, n, 0.5),  type="h", col=2, lwd=7)
-		text(0, ymin/2, labels=paste0("pv=", round(pv, 4)), col=4, pos=4)
+		lines(0:np, dbinom(0:np, n, 0.5),  type="h", col="red", lwd=7)
+		text(0, ymin/2, labels=paste0("pv=", round(pv, 4)), col="blue", pos=4)
 	} else { # [Correction]
 		if (np < n/2) xbase = c(0:np, (n-np):n) else xbase = c(0:(n-np), np:n)
-		lines(xbase, dbinom(xbase, n, 0.5),  type="h", col=2, lwd=7)
-		text(n, ymin/2, labels=paste0("pv1=", round(pv/2, 4)), col=4, pos=2)
-		text(0, ymin/2, labels=paste0("pv2=", round(pv/2, 4)), col=4, pos=4)
+		lines(xbase, dbinom(xbase, n, 0.5),  type="h", col="red", lwd=7)
+		text(n, ymin/2, labels=paste0("pv1=", round(pv/2, 4)), col="blue", pos=2)
+		text(0, ymin/2, labels=paste0("pv2=", round(pv/2, 4)), col="blue", pos=4)
 	}
 }
 
@@ -380,7 +380,7 @@ runs.dist = function(n1=2:20, n2=2:20, alp=0.05, tab=TRUE, side="two", plot=FALS
 	for (k in 1:mm) {
   		rmax = ifelse(n1[k] == n2[k], 2 * n1[k], 2 * min(n1[k], n2[k]) + 1)
     		x = 2:rmax
-    		plot(x, Vdruns.exact(x,n1[k],n2[k]), type = "h", lwd=4, col=2, ylab="f(x)",
+    		plot(x, Vdruns.exact(x,n1[k],n2[k]), type = "h", lwd=4, col="red", ylab="f(x)",
        			main = paste0("Runs PDF (n1 = ", n1[k], ", n2 =", n2[k], ")"))
 	}
       }
@@ -472,8 +472,8 @@ runstest.plot = function(x, n1, n2, alp=0.05, side="two", dig=4, plot=TRUE) {
 		ylim=c(0, ymax), main=mt, col=grey(0.5))
 	xa2 = seq(2, n1+n2, length=100)
 	lines(xa2, dnorm(xa2, mu, sqrt(vr)), lty=1, col="green4")
-	lines(area, Vdruns.exact(area, n1, n2), type="h", lwd=5, col=2)
-	text(xpt, druns.exact(r1,n1,n2), labels=round(ppv, 4), col=4, pos=pos)
+	lines(area, Vdruns.exact(area, n1, n2), type="h", lwd=5, col="red")
+	text(xpt, druns.exact(r1,n1,n2), labels=round(ppv, 4), col="blue", pos=pos)
       }
 }
 
@@ -585,15 +585,15 @@ corr.spear = function(x, y, r0=0, xl, yl, mt, step=1:2, alp=0.05, dig=4) {
 	y11 = floor(min(y, lm1$fit))
 	y12 = ceiling(max(y, lm1$fit))
 	plot(x, y, pch=19, main=mt, xlab=xl, ylab=yl, ylim=c(y11, y12))
-	grid(col=3)
-	abline(lm1, col=2)
+	grid(col="green")
+	abline(lm1, col="red")
 
 	mt2 = paste0("Scatter Plot of r(", yl, ") vs. r(", xl, ")")
 	y21 = floor(min(y2, lm2$fit))
 	y22 = ceiling(max(y2, lm2$fit))
 	plot(x2, y2, pch=19, main=mt2, xlab=paste0("r(", xl, ")"), ylab=paste0("r(", yl, ")"), ylim=c(y21, y22))
-	grid(col=3)
-	abline(lm2, col=2)
+	grid(col="green")
+	abline(lm2, col="red")
       }
 }
 
@@ -634,7 +634,7 @@ ranksum.dist = function(n1, n2=3:10, tab=TRUE, plot=FALSE, dig=4) {
 	if (length(n1)==1) n1=rep(n1, nn)
 	if (length(n2)==1) n2=rep(n2, nn)
 
-	if (nn<6) { dcol=c(1, 2, "green4", 4, "purple", 6)
+	if (nn<6) { dcol=c("black", "red", "green4", "blue", "purple", "pink")
 	} else dcol=rainbow(nn)
 	lab = rep("", nn)
 
@@ -715,33 +715,33 @@ ranksum.plot = function(x, y, side="two", xlab="Rank Sum statistic", dig=4) {
       # Probability distribution function
 	lines(xa, dwilcox(xa, n1, n2), type="h", lwd=3, col=grey(0.5))
       # Central location
-	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col=2)
-	text(mu, ymin/2, labels=mu, col=4)
+	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col="red")
+	text(mu, ymin/2, labels=mu, col="blue")
       # Critical region and p-value
 	if (any(grepl(side, c("up", "greater")))) {
 	    # Upper critical region (one-sided)
-		text(U1, dwilcox(U1, n1, n2), labels=U1, col=4, pos=3)
-		lines(U1:xmax, dwilcox(U1:xmax, n1, n2),  type="h", col=2, lwd=3)
-		text((U1+xmax)/2, ymin/2, labels=round(pv, dig), col=2)
+		text(U1, dwilcox(U1, n1, n2), labels=U1, col="blue", pos=3)
+		lines(U1:xmax, dwilcox(U1:xmax, n1, n2),  type="h", col="red", lwd=3)
+		text((U1+xmax)/2, ymin/2, labels=round(pv, dig), col="red")
 	} else if (any(grepl(side, c("low", "less")))) {
 	    # Lower critical region (one-sided)
-		text(U1, dwilcox(U1, n1, n2), labels=U1, col=4, pos=3)
-		lines(0:U1, dwilcox(0:U1, n1, n2),  type="h", col=2, lwd=3)
-		text(U1/2, ymin/2, labels=round(pv, dig), col=2)
+		text(U1, dwilcox(U1, n1, n2), labels=U1, col="blue", pos=3)
+		lines(0:U1, dwilcox(0:U1, n1, n2),  type="h", col="red", lwd=3)
+		text(U1/2, ymin/2, labels=round(pv, dig), col="red")
 	} else { # [Correction]
 		Umin = min(U1, U2)
 		Umax = max(U1, U2)
 		xbase = c(0:Umin, Umax:xmax)
-		lines(xbase, dwilcox(xbase, n1, n2),  type="h", col=2, lwd=3)
+		lines(xbase, dwilcox(xbase, n1, n2),  type="h", col="red", lwd=3)
 
 	    # Lower critical region (two-sided)
-		text(Umin, dwilcox(Umin, n1, n2), labels=Umin, col=4, pos=3)
-		# lines(0:U1, dwilcox(0:U1, n1, n2),  type="h", col=2, lwd=3)
-		text(Umin/2, ymin/2, labels=round(pv/2, dig), col=2)
+		text(Umin, dwilcox(Umin, n1, n2), labels=Umin, col="blue", pos=3)
+		# lines(0:U1, dwilcox(0:U1, n1, n2),  type="h", col="red", lwd=3)
+		text(Umin/2, ymin/2, labels=round(pv/2, dig), col="red")
 	    # Upper critical region (two-sided)
-		text(Umax, dwilcox(Umax, n1, n2), labels=Umax, col=4, pos=3)
-		# lines(U2:xmax, dwilcox(U2:xmax, n1, n2),  type="h", col=2, lwd=3)
-		text((Umax+xmax)/2, ymin/2, labels=round(pv/2, dig), col=2)
+		text(Umax, dwilcox(Umax, n1, n2), labels=Umax, col="blue", pos=3)
+		# lines(U2:xmax, dwilcox(U2:xmax, n1, n2),  type="h", col="red", lwd=3)
+		text((Umax+xmax)/2, ymin/2, labels=round(pv/2, dig), col="red")
 	}
       # Normal approximation
 	lines(xca, dnorm(xca, mu, sig), col="green4")
@@ -792,10 +792,10 @@ signrank.dist = function(nv=5:50, av, tab=TRUE, plot=FALSE, dig=4) {
 	  dw = sqrt(vw)
   	  xa = 0:(n*(n+1)/2)
   	  ymax = max(dsignrank(xa, n = n), dnorm(mu, mu, dw))
-	  plot(xa, dsignrank(xa, n = n), type = "h", lwd=2, col=2, ylab="f(w)", xlab="w",
+	  plot(xa, dsignrank(xa, n = n), type = "h", lwd=2, col="red", ylab="f(w)", xlab="w",
        		ylim=c(0, ymax), main = paste0("W-Signed Rank (n = ", n, ")"))
 	  xa2 = seq(0, mu*2, length=100)
-	  lines(xa2, dnorm(xa2, mu, dw), col=4)
+	  lines(xa2, dnorm(xa2, mu, dw), col="blue")
 	}
       }
 }
@@ -874,30 +874,30 @@ signrank.plot = function(x, y, mu0=0, side="two", xlab="Signed Rank Sum", dig=4)
       # Distribution function of test statistic
 	lines(xa, pdf, type="h", lwd=3, col=grey(0.6))
       # Central location
-	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col=2)
-	text(mu, ymin/2, labels=mu, col=4)
+	segments(mu, 0, mu, dnorm(mu, mu, sig), lty=2, col="red")
+	text(mu, ymin/2, labels=mu, col="blue")
       # Critical region
 	if (any(grepl(side, c("up","greater")))) {
 	    # upper critical region Display
-		text(w1, dsignrank(w1, n), labels=w1, col=4, pos=3)
-		lines(w1:xmax, dsignrank(w1:xmax, n),  type="h", col=2, lwd=3)
-		text((w1+xmax)/2, ymin/2, labels=round(pv, dig), col=2)
+		text(w1, dsignrank(w1, n), labels=w1, col="blue", pos=3)
+		lines(w1:xmax, dsignrank(w1:xmax, n),  type="h", col="red", lwd=3)
+		text((w1+xmax)/2, ymin/2, labels=round(pv, dig), col="red")
 	} else if (any(grepl(side, c("low","less")))) {
 	    # lower critical region Display
-		text(w1, dsignrank(w1, n), labels=w1, col=4, pos=3)
-		lines(0:w1, dsignrank(0:w1, n),  type="h", col=2, lwd=3)
-		text(w1/2, ymin/2, labels=round(pv, dig), col=2)
+		text(w1, dsignrank(w1, n), labels=w1, col="blue", pos=3)
+		lines(0:w1, dsignrank(0:w1, n),  type="h", col="red", lwd=3)
+		text(w1/2, ymin/2, labels=round(pv, dig), col="red")
 	} else {
 	    # lower critical region Display
 		wmin=min(w1,w2)
 		wmax=max(w1,w2)
-		text(wmin, dsignrank(wmin, n), labels=wmin, col=4, pos=3)
-		lines(0:wmin, dsignrank(0:wmin, n),  type="h", col=2, lwd=3)
-		text(wmin/2, ymin/2, labels=round(pv/2, dig), col=2)
+		text(wmin, dsignrank(wmin, n), labels=wmin, col="blue", pos=3)
+		lines(0:wmin, dsignrank(0:wmin, n),  type="h", col="red", lwd=3)
+		text(wmin/2, ymin/2, labels=round(pv/2, dig), col="red")
 	    # upper critical region Display
-		text(wmax, dsignrank(wmax, n), labels=wmax, col=4, pos=3)
-		lines(wmax:xmax, dsignrank(wmax:xmax, n),  type="h", col=2, lwd=3)
-		text((wmax+xmax)/2, ymin/2, labels=round(pv/2, dig), col=2)
+		text(wmax, dsignrank(wmax, n), labels=wmax, col="blue", pos=3)
+		lines(wmax:xmax, dsignrank(wmax:xmax, n),  type="h", col="red", lwd=3)
+		text((wmax+xmax)/2, ymin/2, labels=round(pv/2, dig), col="red")
 	}
 }
 

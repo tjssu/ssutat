@@ -193,12 +193,11 @@ ch10.man = function(fn=0) {
     if (14 %in% fn) {
 	cat("[14] Power Function of the Test for a Population Mean\n")
 	cat("meanpower.plot(mu0, mu1, sig, nv, alp=0.05, prng, side=\"two\", mt, dig=4)\n")
-	cat("[Mandatory Input]--------------------------\n")
-	cat("mu0\t Population mean value under the null hypothesis\n")
-	cat("mu1\t Vector of population mean values for which the power should be calculated\n")
-	cat("sig\t Population standard deviation\n")
-	cat("nv\t Sample size vector\n")
 	cat("[Optional Input]--------------------------\n")
+	cat("mu0\t Population mean value under the null hypothesis (default=0)\n")
+	cat("mu1\t Alternative population mean values (default=NULL)\n")
+	cat("sig\t Population standard deviation (default=1)\n")
+	cat("nv\t Sample size vector (default=c(10,30,50,100))\n")
 	cat("alp\t Level of significance (default=0.05)\n")
 	cat("prng\t Range of x-axis\n")
 	cat("side \t Type of the alternative hypothesis (\"up\", \"low\", \"two\") (default=\"two\")\n")
@@ -208,12 +207,11 @@ ch10.man = function(fn=0) {
     if (15 %in% fn) {
 	cat("[15] Operating Characteristic Curves of the Test for a Population Mean\n")
 	cat("meanchar.plot(mu0, mu1, sig, nv, alp=0.05, prng, side=\"two\", mt, dig=4)\n")
-	cat("[Mandatory Input]--------------------------\n")
-	cat("mu0\t Population mean value under the null hypothesis\n")
-	cat("mu1\t Vector of population mean values for which the power should be calculated\n")
-	cat("sig\t Population standard deviation\n")
-	cat("nv\t Sample size vector\n")
 	cat("[Optional Input]--------------------------\n")
+	cat("mu0\t Population mean value under the null hypothesis (default=0)\n")
+	cat("mu1\t Alternative population mean values (default=NULL)\n")
+	cat("sig\t Population standard deviation (default=1)\n")
+	cat("nv\t Sample size vector (default=c(10,30,50,100))\n")
 	cat("alp\t Level of significance (default=0.05)\n")
 	cat("prng\t Range of x-axis\n")
 	cat("side \t Type of the alternative hypothesis (\"up\", \"low\", \"two\") (default=\"two\")\n")
@@ -302,18 +300,18 @@ meantest1.plot = function(xb, mu0, sig, n, prng, side="two", mt, dig=4, xlab="Sa
 		cord.x = c(xb, seq(xb, prng[2], length.out=20), prng[2])
 		cord.y = c(0, dnorm(seq(xb, prng[2], length.out=20), mu0, se), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(xb, 0, xb, dnorm(xb, mu0, se), lwd=2, col=2)
-		text(xb, dnorm(xb, mu0, se)*0.9, round(pv, 4), pos=4, col=2)
-		text(xb, 0, round(xb, 4), pos=1, col=4)
+		segments(xb, 0, xb, dnorm(xb, mu0, se), lwd=2, col="red")
+		text(xb, dnorm(xb, mu0, se)*0.9, round(pv, 4), pos=4, col="red")
+		text(xb, 0, round(xb, 4), pos=1, col="blue")
 	} else if (side=="low") {
 		pv = pnorm(xb, mu0, se)
 		cat("P-v = P(Z < Z0) =", round(pv, dig), "\n")
 		cord.x = c(prng[1], seq(prng[1], xb, length.out=20), xb)
 		cord.y = c(0, dnorm(seq(prng[1], xb, length.out=20), mu0, se), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(xb, 0, xb, dnorm(xb, mu0, se), lwd=2, col=2)
-		text(xb, dnorm(xb, mu0, se)*0.9, round(pv, 4), pos=2, col=2)
-		text(xb, 0, round(xb, 4), pos=1, col=4)
+		segments(xb, 0, xb, dnorm(xb, mu0, se), lwd=2, col="red")
+		text(xb, dnorm(xb, mu0, se)*0.9, round(pv, 4), pos=2, col="red")
+		text(xb, 0, round(xb, 4), pos=1, col="blue")
 	} else {
 		mlow = ifelse(xb>mu0, 2*mu0-xb, xb)
 		mup = ifelse(xb>mu0, xb, 2*mu0-xb)
@@ -325,12 +323,12 @@ meantest1.plot = function(xb, mu0, sig, n, prng, side="two", mt, dig=4, xlab="Sa
 		cord.x = c(prng[1], seq(prng[1], mlow, length.out=20), mlow)
 		cord.y = c(0, dnorm(seq(prng[1], mlow, length.out=20), mu0, se), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(c(mlow, mup), 0, c(mlow, mup), dnorm(xb, mu0, se), lwd=2, col=2)
-		text(c(mlow, mup), dnorm(xb, mu0, se)*0.9, round(pv/2, 4), pos=c(2,4), col=2)
-		text(c(mlow, mup), 0, round(c(mlow, mup), 4), pos=1, col=4)
+		segments(c(mlow, mup), 0, c(mlow, mup), dnorm(xb, mu0, se), lwd=2, col="red")
+		text(c(mlow, mup), dnorm(xb, mu0, se)*0.9, round(pv/2, 4), pos=c(2,4), col="red")
+		text(c(mlow, mup), 0, round(c(mlow, mup), 4), pos=1, col="blue")
 	}
 	abline(h=0); abline(v=mu0, lty=2, lwd=2, col="green3")
-	lines(xa, dnorm(xa, mu0, se), type="l", lwd=2, col=4)
+	lines(xa, dnorm(xa, mu0, se), type="l", lwd=2, col="blue")
 }
 
 # [10-3] Confidence Interval for the Population Mean (unknown variance)
@@ -412,18 +410,18 @@ meantest2.plot = function(xb, mu0, sig, n, prng=c(-4,4), side="two", mt, dig=4) 
 		cord.x = c(t0, seq(t0, prng[2], length.out=20), prng[2])
 		cord.y = c(0, dt(seq(t0, prng[2], length.out=20), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(t0, 0, t0, dt(t0, df), lwd=2, col=2)
-		text(t0, dt(t0, df)*0.9, round(pv, dig), pos=4, col=2)
-		text(t0, 0, round(t0, dig), pos=1, col=4)
+		segments(t0, 0, t0, dt(t0, df), lwd=2, col="red")
+		text(t0, dt(t0, df)*0.9, round(pv, dig), pos=4, col="red")
+		text(t0, 0, round(t0, dig), pos=1, col="blue")
 	} else if (side=="low") {
 		pv = pt(t0, df)
 		cat("P-v = P(T < T0) =", round(pv, dig), "\n")
 		cord.x = c(prng[1], seq(prng[1], t0, length.out=20), t0)
 		cord.y = c(0, dt(seq(prng[1], t0, length.out=20), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(t0, 0, t0, dt(t0, df), lwd=2, col=2)
-		text(t0, dt(t0, df)*0.9, round(pv, dig), pos=2, col=2)
-		text(t0, 0, round(t0, dig), pos=1, col=4)
+		segments(t0, 0, t0, dt(t0, df), lwd=2, col="red")
+		text(t0, dt(t0, df)*0.9, round(pv, dig), pos=2, col="red")
+		text(t0, 0, round(t0, dig), pos=1, col="blue")
 	} else {
 		mlow = ifelse(t0>0, -t0, t0)
 		mup = ifelse(t0>0, t0, -t0)
@@ -435,12 +433,12 @@ meantest2.plot = function(xb, mu0, sig, n, prng=c(-4,4), side="two", mt, dig=4) 
 		cord.x = c(prng[1], seq(prng[1], mlow, length.out=20), mlow)
 		cord.y = c(0, dt(seq(prng[1], mlow, length.out=20), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(c(mlow, mup), 0, c(mlow, mup), dt(t0, df), lwd=2, col=2)
-		text(c(mlow, mup), dt(t0, df)*0.9, round(pv/2, dig), pos=c(2,4), col=2)
-		text(c(mlow, mup), 0, round(c(mlow, mup), dig), pos=1, col=4)
+		segments(c(mlow, mup), 0, c(mlow, mup), dt(t0, df), lwd=2, col="red")
+		text(c(mlow, mup), dt(t0, df)*0.9, round(pv/2, dig), pos=c(2,4), col="red")
+		text(c(mlow, mup), 0, round(c(mlow, mup), dig), pos=1, col="blue")
 	}
 	abline(h=0); abline(v=0, lty=2, lwd=2, col="green3")
-	lines(xa, dt(xa, df), type="l", lwd=2, col=4)
+	lines(xa, dt(xa, df), type="l", lwd=2, col="blue")
 }
 
 # [10-5] Confidence Interval for a Population Proportion
@@ -526,7 +524,7 @@ bntest.plot = function(x, n, p0, alp=0.05, side="two", dig=4, dcol) {
     # Range of x
 	xa = 0:n
     # Plot the probability distribution
-	if (missing(dcol)) dcol=c(4, 2, "green4", "orange", "purple")
+	if (missing(dcol)) dcol=c("blue", "red", "green4", "orange", "purple")
 	win.graph(7,5)
 	plot(xa, dbinom(xa, n, p0), type="h", lwd=7, col=grey(0.7), ylim=c(0, 1.1*max(dbinom(xa, n, p0))),
 	main=paste0("B(", n, ", ", p0,") Distribution & P-value"), xlab="x", ylab="f(x)" )
@@ -602,7 +600,7 @@ bntest2.plot = function(x, n, p0, alp=0.05, side="two", dig=4) {
 	abline(h=0, col=grey(0.4))
 
 	xa2 = switch(nside, x1:x, x:x2, (x1:x2)[dbinom(x1:x2, n, p0) <= dbinom(x, n, p0)])
-	lines(xa2, dbinom(xa2, n, p0), type="h", lwd=5, col=2)
+	lines(xa2, dbinom(xa2, n, p0), type="h", lwd=5, col="red")
 
     # Normal approximation
 	xa3 = seq(x1, x2, length=100)
@@ -612,14 +610,14 @@ bntest2.plot = function(x, n, p0, alp=0.05, side="two", dig=4) {
 	if (x<n*p0) {txa4 = c(x, x+0.5, xo, xo-0.5)
 	} else {	txa4 = c(xo, xo+0.5, x, x-0.5) }
 	xa4 = switch(nside, c(x, x+0.5), c(x, x-0.5), txa4)
-	if (nside==1) abline(v=xa4, lty=2, col=c(4, "purple"))
-	if (nside==2) abline(v=xa4, lty=2, col=c(4, "purple"))
-	if (nside==3) abline(v=xa4, lty=2, col=c(4, "purple"))
+	if (nside==1) abline(v=xa4, lty=2, col=c("blue", "purple"))
+	if (nside==2) abline(v=xa4, lty=2, col=c("blue", "purple"))
+	if (nside==3) abline(v=xa4, lty=2, col=c("blue", "purple"))
 
 	lab1 = paste("Exact :", round(pvale, dig))
 	lab2 = paste("Normal :", round(pv, dig))
 	lab3 = paste("Correct :", round(pv2, dig))
-	legend("topright", c(lab1, lab2, lab3), text.col=c(2, 4, "purple"))
+	legend("topright", c(lab1, lab2, lab3), text.col=c("red", "blue", "purple"))
 }
 
 # [10-8] Confidence Interval for a Population Variance
@@ -736,18 +734,18 @@ chitest.plot = function(stat, df, prng, side="two", mt, dig=4, ppt=20) {
 		cord.x = c(stat, seq(stat, prng[2], length.out=ppt), prng[2])
 		cord.y = c(0, dchisq(seq(stat, prng[2], length.out=ppt), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(stat, 0, stat, dchisq(stat, df), lwd=2, col=2)
-		text(stat, dchisq(stat, df)*0.9, round(pv, 4), pos=4, col=2)
-		text(stat, 0, round(stat, 4), pos=1, col=4)
+		segments(stat, 0, stat, dchisq(stat, df), lwd=2, col="red")
+		text(stat, dchisq(stat, df)*0.9, round(pv, 4), pos=4, col="red")
+		text(stat, 0, round(stat, 4), pos=1, col="blue")
 	} else if (any(grepl(side, c("less", "low")))) {
 		pv = plow
 		cat(paste0("Chi0 = ", round(stat, dig), "\t P-v = ", round(pv, dig)), "\n")
 		cord.x = c(prng[1], seq(prng[1], stat, length.out=ppt), stat)
 		cord.y = c(0, dchisq(seq(prng[1], stat, length.out=ppt), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(stat, 0, stat, dchisq(stat, df), lwd=2, col=2)
-		text(stat, dchisq(stat, df)*0.9, round(pv, 4), pos=2, col=2)
-		text(stat, 0, round(stat, 4), pos=1, col=4)
+		segments(stat, 0, stat, dchisq(stat, df), lwd=2, col="red")
+		text(stat, dchisq(stat, df)*0.9, round(pv, 4), pos=2, col="red")
+		text(stat, 0, round(stat, 4), pos=1, col="blue")
 	} else if (any(grepl(side, c("two.sided", "two-sided")))) {
 		pv = 2*min(plow, 1-plow)
 		cat(paste0("Chi0 = ", round(stat, dig), "\t P-v = ", round(pv, dig)), "\n")
@@ -759,12 +757,12 @@ chitest.plot = function(stat, df, prng, side="two", mt, dig=4, ppt=20) {
 		cord.x = c(prng[1], seq(prng[1], mlow, length.out=ppt), mlow)
 		cord.y = c(0, dchisq(seq(prng[1], mlow, length.out=ppt), df), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
-		segments(c(mlow, mup), 0, c(mlow, mup), dchisq(c(mlow, mup), df), lwd=2, col=2)
-		text(c(mlow, mup), dchisq(c(mlow, mup), df)*0.9, round(pv/2, 4), pos=c(2,4), col=2)
-		text(c(mlow, mup), 0, round(c(mlow, mup), 4), pos=1, col=4)
+		segments(c(mlow, mup), 0, c(mlow, mup), dchisq(c(mlow, mup), df), lwd=2, col="red")
+		text(c(mlow, mup), dchisq(c(mlow, mup), df)*0.9, round(pv/2, 4), pos=c(2,4), col="red")
+		text(c(mlow, mup), 0, round(c(mlow, mup), 4), pos=1, col="blue")
 	}
 	abline(h=0); abline(v=qchisq(0.5, df), lty=2, lwd=2, col="green3")
-	lines(xa, dchisq(xa, df), type="l", lwd=2, col=4)
+	lines(xa, dchisq(xa, df), type="l", lwd=2, col="blue")
 }
 
 # [10-11] Simulate the Confidence Interval for a Population Mean
@@ -808,9 +806,9 @@ cimean.sim=function(n, mu=0, sig=1, alp=0.05, N=100, seed=9857, dig=4, plot=TRUE
 		plot(ir, ci[ ,2], type="p", pch=19, cex=0.6, col=1, ylim=c(min(ci), max(ci)),
 			main="Confidence Intervals for a Population Mean",
 				ylab="Confidence Interval", xlab="Iteration")
-		abline(h=mu, col=2)
+		abline(h=mu, col="red")
 		arrows(ir, ci[ ,1], ir, ci[ ,3], length=0.03, code=3, angle=90, lwd=1.5,
-			col=ifelse((ci[ , 1]>mu | ci[ , 3]<mu), 2, 4) )
+			col=ifelse((ci[ , 1]>mu | ci[ , 3]<mu), "red", "blue") )
 	}
     # Number of confidence intervals without the population mean
 	nup = sum(ci[ , 1]>mu)
@@ -861,9 +859,9 @@ civar.sim=function(n, mu=0, sig=1, alp=0.05, N=100, seed=9857, dig=4, plot=TRUE)
 		plot(ir, ci[ ,2], type="p", pch=19, cex=0.6, col=1, ylim=c(min(ci), max(ci)),
 			main="Confidence Intervals for a Population Variance",
 				ylab="Confidence Interval", xlab="Iteration")
-		abline(h=sig^2, col=2)
+		abline(h=sig^2, col="red")
 		arrows(ir, ci[ ,1], ir, ci[ ,3], length=0.03, code=3, angle=90, lwd=1.5,
-			col=ifelse((ci[ , 1]>sig^2 | ci[ , 3]<sig^2), 2, 4) )
+			col=ifelse((ci[ , 1]>sig^2 | ci[ , 3]<sig^2), "red", "blue") )
 	}
    # Number of confidence intervals without the population variance
 	nup = sum(ci[ , 1]>sig^2)
@@ -910,9 +908,9 @@ ciprob.sim=function(n, p=0.5, alp=0.05, N=100, seed=9857, dig=4, plot=TRUE) {
 		plot(ir, ci[ ,2], type="p", pch=19, cex=0.6, col=1, ylim=c(min(ci), max(ci)),
 			main="Confidence Intervals for a Proportion",
 				ylab="Confidence Interval", xlab="Iteration")
-		abline(h=p, col=2)
+		abline(h=p, col="red")
 		arrows(ir, ci[ ,1], ir, ci[ ,3], length=0.03, code=3, angle=90, lwd=1.5,
-			col=ifelse((ci[ , 1]>p | ci[ , 3]<p), 2, 4) )
+			col=ifelse((ci[ , 1]>p | ci[ , 3]<p), "red", "blue") )
 	}
     # Number of confidence intervals without the population proportion
 	nup = sum(ci[ , 1]>p)
@@ -924,10 +922,10 @@ ciprob.sim=function(n, p=0.5, alp=0.05, N=100, seed=9857, dig=4, plot=TRUE) {
 # [10-14] Power Function of the Test for a Population Mean
 #' @title Power Function of the Test for a Mean
 #' @description Power Function of the Test for a Population Mean
-#' @param mu0 Population mean value under the null hypothesis
-#' @param mu1 Vector of population mean values for which the power should be calculated
-#' @param sig Population standard deviation
-#' @param nv Sample size vector
+#' @param mu0 Population mean value under the null hypothesis, Default: 0
+#' @param mu1 Alternative population mean values, Default: NULL
+#' @param sig Population standard deviation, Default: 1
+#' @param nv Sample size vector, Default: c(10,30,50,100)
 #' @param alp Level of significance, Default: 0.05
 #' @param prng Range of x-axis
 #' @param side Type of the alternative hypothesis ("up", "low", "two"), Default: 'two'
@@ -987,20 +985,20 @@ meanpower.plot = function(mu0, mu1, sig, nv, alp=0.05, prng, side="two", mt, dig
 	xa = seq(prng[1], prng[2], length.out=100)
 	win.graph(7,5)
 	if (nn>5) {dcol=rainbow(nn)
-	} else dcol=c(2, 4, "green4", "purple", 6)
+	} else dcol=c("red", "blue", "green4", "purple", 6)
     	# Power function
 	if (nside==1) {
 		plot(xa, pwr1(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, pwr1(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
-		abline(h=alp, lty=2, col=2)
-		text(mu0-(prng[2]-prng[1])*0.05, alp, labels=bquote(alpha==.(alp)), col=2, pos=1)
+		grid(col="green")
+		abline(h=alp, lty=2, col="red")
+		text(mu0-(prng[2]-prng[1])*0.05, alp, labels=bquote(alpha==.(alp)), col="red", pos=1)
 	    # Illustration
 	          	if (!(missing(mu1))) {
-			abline(v=mu1, lty=2, col=4)
-			segments(prng[1], pwr1(nv, mu1), mu1, pwr1(nv, mu1), lty=2, col=4)
-			text(x1, pwr1(nv, mu1), labels=format(pwr1(nv, mu1), digits=3), pos=4, col=2)
+			abline(v=mu1, lty=2, col="blue")
+			segments(prng[1], pwr1(nv, mu1), mu1, pwr1(nv, mu1), lty=2, col="blue")
+			text(x1, pwr1(nv, mu1), labels=format(pwr1(nv, mu1), digits=3), pos=4, col="red")
 		}
 	    # Display sample size [Correction]
 		if (nn<=10) legend("bottom", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
@@ -1008,33 +1006,33 @@ meanpower.plot = function(mu0, mu1, sig, nv, alp=0.05, prng, side="two", mt, dig
 		plot(xa, pwr2(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, pwr2(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
-		abline(h=alp, lty=2, col=2)
-		text(mu0, alp, labels=bquote(alpha==.(alp)), col=2, pos=1)
+		grid(col="green")
+		abline(h=alp, lty=2, col="red")
+		text(mu0, alp, labels=bquote(alpha==.(alp)), col="red", pos=1)
 	    # Display sample size [Correction]
 		if (nn<=10) legend("right", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
 	    # Illustration
 	          	if (!(missing(mu1))) {
-			abline(v=mu1, lty=2, col=4)
-			segments(prng[1], pwr2(nv, mu1), mu1, pwr2(nv, mu1), lty=2, col=4)
-			text(x1, pwr2(nv, mu1), labels=format(pwr2(nv, mu1), digits=3), pos=4, col=2)
+			abline(v=mu1, lty=2, col="blue")
+			segments(prng[1], pwr2(nv, mu1), mu1, pwr2(nv, mu1), lty=2, col="blue")
+			text(x1, pwr2(nv, mu1), labels=format(pwr2(nv, mu1), digits=3), pos=4, col="red")
 		}
 
 	} else if (nside==3) {
 		plot(xa, pwr3(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, pwr3(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
-		abline(h=alp, lty=2, col=2)
-		text(mu0, alp, labels=bquote(alpha==.(alp)), col=2, pos=1)
+		grid(col="green")
+		abline(h=alp, lty=2, col="red")
+		text(mu0, alp, labels=bquote(alpha==.(alp)), col="red", pos=1)
 	    # Display sample size [Correction]
 		if (nn<=10) legend("right", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
 	    # Illustration
 	          	if (!(missing(mu1))) {
 			mu2=mu0-(mu1-mu0)
-			abline(v=c(mu1, mu2), lty=2, col=4)
-			segments(prng[1], pwr3(nv, mu1), mu1, pwr3(nv, mu1), lty=2, col=4)
-			text(x1, pwr3(nv, mu1), labels=format(pwr3(nv, mu1), digits=3), pos=4, col=2)
+			abline(v=c(mu1, mu2), lty=2, col="blue")
+			segments(prng[1], pwr3(nv, mu1), mu1, pwr3(nv, mu1), lty=2, col="blue")
+			text(x1, pwr3(nv, mu1), labels=format(pwr3(nv, mu1), digits=3), pos=4, col="red")
 		}
 	}
 }
@@ -1042,10 +1040,10 @@ meanpower.plot = function(mu0, mu1, sig, nv, alp=0.05, prng, side="two", mt, dig
 # [10-15] Operating Characteristic Curves of the Test for a Population Mean
 #' @title Operating Characteristic Curves of the Test for a Mean
 #' @description Operating Characteristic Curves of the Test for a Population Mean
-#' @param mu0 Population mean value under the null hypothesis
-#' @param mu1 Vector of population mean values for which the power should be calculated
-#' @param sig Population standard deviation
-#' @param nv Sample size vector
+#' @param mu0 Population mean value under the null hypothesis, Default: 0
+#' @param mu1 Alternative population mean values, Default: NULL
+#' @param sig Population standard deviation, Default: 1
+#' @param nv Sample size vector, Default: c(10,30,50,100)
 #' @param alp Level of significance, Default: 0.05
 #' @param prng Range of x-axis
 #' @param side Type of the alternative hypothesis ("up", "low", "two"), Default: 'two'
@@ -1106,21 +1104,21 @@ meanchar.plot = function(mu0, mu1, sig, nv, alp=0.05, prng, side="two", mt, dig=
 	xa = seq(prng[1], prng[2], length.out=100)
 	win.graph(7,5)
 	if (nn>5) {dcol=rainbow(nn)
-	} else dcol=c(2, 4, "green4", "purple", 6)
+	} else dcol=c("red", "blue", "green4", "purple", 6)
     	# OC curve
 	if (nside==1) {
 		plot(xa, char1(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(1-psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, char1(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
+		grid(col="green")
 	    # Level of significance
-		abline(h=1-alp, lty=2, col=2)
-		text(mu0-(prng[2]-prng[1])*0.05, 1-alp, labels=bquote(alpha==.(alp)), col=2, pos=3)
+		abline(h=1-alp, lty=2, col="red")
+		text(mu0-(prng[2]-prng[1])*0.05, 1-alp, labels=bquote(alpha==.(alp)), col="red", pos=3)
 	    # Illustration
 	          	if (!(missing(mu1))) {
-			abline(v=mu1, lty=2, col=4)
-			segments(prng[1], char1(nv, mu1), mu1, char1(nv, mu1), lty=2, col=4)
-			text(x1, char1(nv, mu1), labels=round(char1(nv, mu1), 3), pos=4, col=2)
+			abline(v=mu1, lty=2, col="blue")
+			segments(prng[1], char1(nv, mu1), mu1, char1(nv, mu1), lty=2, col="blue")
+			text(x1, char1(nv, mu1), labels=round(char1(nv, mu1), 3), pos=4, col="red")
 		}
 	    # Display sample size [Correction]
 		if (nn<=10) legend("top", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
@@ -1128,35 +1126,35 @@ meanchar.plot = function(mu0, mu1, sig, nv, alp=0.05, prng, side="two", mt, dig=
 		plot(xa, char2(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(1-psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, char2(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
+		grid(col="green")
 	    # Level of significance
-		abline(h=1-alp, lty=2, col=2)
-		text(mu0, 1-alp, labels=bquote(alpha==.(alp)), col=2, pos=3)
+		abline(h=1-alp, lty=2, col="red")
+		text(mu0, 1-alp, labels=bquote(alpha==.(alp)), col="red", pos=3)
 	    # Display sample size [Correction]
 		if (nn<=10) legend("right", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
 	    # Illustration
 	          	if (!(missing(mu1))) {
-			abline(v=mu1, lty=2, col=4)
-			segments(prng[1], char2(nv, mu1), mu1, char2(nv, mu1), lty=2, col=4)
-			text(x1, char2(nv, mu1), labels=round(char2(nv, mu1), 3), pos=4, col=2)
+			abline(v=mu1, lty=2, col="blue")
+			segments(prng[1], char2(nv, mu1), mu1, char2(nv, mu1), lty=2, col="blue")
+			text(x1, char2(nv, mu1), labels=round(char2(nv, mu1), 3), pos=4, col="red")
 		}
 
 	} else if (nside==3) {
 		plot(xa, char3(nv[1], xa), type="n", ylim=c(0,1), xlim=c(x1, prng[2]),
 			main=mt, ylab=expression(1-psi(mu)), xlab=expression(mu))
 		for (i in 1:nn) lines(xa, char3(nv[i], xa), lwd=2, col=dcol[i])
-		grid(col=3)
+		grid(col="green")
 	    # Level of significance
-		abline(h=1-alp, lty=2, col=2)
-		text(mu0, 1-alp, labels=bquote(alpha==.(alp)), col=2, pos=3)
+		abline(h=1-alp, lty=2, col="red")
+		text(mu0, 1-alp, labels=bquote(alpha==.(alp)), col="red", pos=3)
 	    # Display sample size [Correction]
 		if (nn<=10) legend("right", paste0("n=", nv), col=dcol[1:nn], lwd=2, bg="white")
 	    # Illustration
 	          	if (!(missing(mu1))) {
 			mu2=mu0-(mu1-mu0)
-			abline(v=c(mu1, mu2), lty=2, col=4)
-			segments(prng[1], char3(nv, mu1), mu1, char3(nv, mu1), lty=2, col=4)
-			text(x1, char3(nv, mu1), labels=round(char3(nv, mu1), 3), pos=4, col=2)
+			abline(v=c(mu1, mu2), lty=2, col="blue")
+			segments(prng[1], char3(nv, mu1), mu1, char3(nv, mu1), lty=2, col="blue")
+			text(x1, char3(nv, mu1), labels=round(char3(nv, mu1), 3), pos=4, col="red")
 		}
 	}
 }

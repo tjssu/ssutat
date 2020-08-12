@@ -249,7 +249,7 @@ cont.spdf = function(dist, lo, up, para, para2, ymax, xl, yl, dcol, np=100, xp) 
 	xa = seq(lo, up, length=np)
 	pdf = getpdf8(dist, xa, para, para2)
     # Colors and labels
-	if (missing(dcol)) dcol = rep(2, N)
+	if (missing(dcol)) dcol = rep("red", N)
 	if (missing(yl)) yl  = rep("f(x)", N)
 	if (missing(xl)) xl  = paste0("(", letters[1:N], ")")
     # [Correction] 9 --> 12
@@ -263,7 +263,7 @@ cont.spdf = function(dist, lo, up, para, para2, ymax, xl, yl, dcol, np=100, xp) 
 	for (k in 1:N) {
 		plot(xa, pdf[ ,k], type="l", main=lab[[k]], xlim=c(lo,up), ylim=c(0, ymax),
 			lwd=2, col=dcol[k], ylab=yl[k], xlab=xl[k] )
-		if (!missing(xp)) abline(v=xp[k], lty=2, col=4)
+		if (!missing(xp)) abline(v=xp[k], lty=2, col="blue")
 	}
 }
 
@@ -321,7 +321,7 @@ norm.trans = function(mu, sig, a, b, mt1, mt0, dig=4, span=6, np=100) {
 	polygon(cord.x, cord.y, col='lightcyan')
 	ab = (a+b)/2
 	text(ab, 0.4*dnorm(ab,mu,sig), labels=paste0("P(",a,"<X<",b,")\n=",round(px, dig)))
-	lines(x1, fx[,2], lwd=2, col=2)
+	lines(x1, fx[,2], lwd=2, col="red")
     # Plot the standard normal PDF
 	plot(x0, fx[,1], type="n", main=mt0, ylim=c(0, ymax*ysc0), ylab="f(x)", xlab="")
 	cord.x = c(c, seq(c, d, 0.01), d)
@@ -329,7 +329,7 @@ norm.trans = function(mu, sig, a, b, mt1, mt0, dig=4, span=6, np=100) {
 	polygon(cord.x, cord.y, col='lightcyan')
 	cd = (c+d)/2
 	text(cd, 0.4*dnorm(cd), labels=paste0("P(",round(c, dig),"<Z<",round(d, dig),")\n=",round(pz, dig)))
-	lines(x0, fx[,1], lwd=2, col=2)
+	lines(x0, fx[,1], lwd=2, col="red")
 }
 
 # [8-3] Plot Standard Normal Cumulative Probability P(Z<z)
@@ -359,12 +359,12 @@ snorm.cdf = function(zp, lo=-4, up=4, mt, dig=4) {
 	plot(x, pnorm(x), type ="n", main=mt,
 		ylim=c(-0.05, 1), xlim=c(lo1, up), ylab=bquote(Phi(z)), xlab="z")
 	abline(h=0, col="green2")
-	lines(x, pnorm(x), type="l", lwd=2, col=2)
+	lines(x, pnorm(x), type="l", lwd=2, col="red")
     #  Display the cumulative probabilities up to zp
 	if (missing(zp)) zp = -2:2
 	yp = pnorm(zp)
-	segments(zp, 0, zp, yp, lty=2, col=4)
-	segments(zp, yp, lo, yp, lty=2, col=4)
+	segments(zp, 0, zp, yp, lty=2, col="blue")
+	segments(zp, yp, lo, yp, lty=2, col="blue")
 	text(zp, 0, labels=zp, pos=1, cex=0.8)
 	text(lo2, yp, labels=format(yp, digits=dig), cex=0.8)
 }
@@ -397,13 +397,13 @@ snorm.prob = function(zp, lo=-4, up=4, mt, dig=4) {
 	plot(x, dnorm(x), type ="n", main=mt,
 		ylim=c(-y1, ymax), xlim=c(lo, up), ylab=bquote(phi(z)), xlab="z")
 	abline(h=0, col="green4")
-	lines(x, dnorm(x), type="l", lwd=2, col=2)
+	lines(x, dnorm(x), type="l", lwd=2, col="red")
     # Display the central probability P(-zp<Z<zp)
 	if (missing(zp)) zp = 1:4
 	prz = pnorm(zp)-pnorm(-zp)
-	abline(v=c(-zp, zp), lty=2, col=4)
+	abline(v=c(-zp, zp), lty=2, col="blue")
 	yp = -0.11*ymax*(1:nzp)
-	arrows(-zp, yp, zp, yp, length=0.1, code=3, col=4)
+	arrows(-zp, yp, zp, yp, length=0.1, code=3, col="blue")
 	text(0, yp, labels=paste0("P(",-zp,"<Z<",zp,")=", format(prz, digits=dig)), pos=3, cex=0.8)
 }
 
@@ -445,14 +445,14 @@ snorm.quant = function(pv, pv2, mt, dig=4) {
 	plot(x, dnorm(x), type ="n", main=mt,
 		ylim=c(-y1, ymax*1.2), xlim=c(x1, x2), ylab=bquote(phi(z)), xlab="z")
 	abline(h=0, col="green4")
-	lines(x, dnorm(x), type="l", lwd=2, col=2)
+	lines(x, dnorm(x), type="l", lwd=2, col="red")
 
       # Display Quantiles
 	fzv2 = format(zv2, digits=dig)
 	yp = -0.08*ymax*(1:nzp)
 	yp2 = ymax*1.2+yp
-	segments(zv2, yp, zv2, yp2, lty=2, col=4)
-	text(zv2, yp2, pv2, cex=0.8, pos=3, col=2)
+	segments(zv2, yp, zv2, yp2, lty=2, col="blue")
+	text(zv2, yp2, pv2, cex=0.8, pos=3, col="red")
 	text(zv2, yp, fzv2, pos=1, cex=0.8)
 }
 
@@ -478,12 +478,12 @@ snorm.quant0 = function(pv, pv2, mt, dig=4) {
     # Plot quantiles
 	p = 1:199/200
 	win.graph(7, 6)
-	plot(p, qnorm(p), type ="l", lwd=2, col=2, ylim=c(-3, 2.7), xlim=c(-0.1, 1),
+	plot(p, qnorm(p), type ="l", lwd=2, col="red", ylim=c(-3, 2.7), xlim=c(-0.1, 1),
 		ylab=bquote(Phi^-1 ~ (p)), xlab="p", main=mt)
-	abline(v=0.5, h=0, lty=1, col=3)
+	abline(v=0.5, h=0, lty=1, col="green")
    # Display major quantiles
-	segments(pv, -2.7, pv, zv, lty=2, col=4)
-	arrows(pv, zv, -0.02, zv, length=0.07, lty=2, col=4)
+	segments(pv, -2.7, pv, zv, lty=2, col="blue")
+	arrows(pv, zv, -0.02, zv, length=0.07, lty=2, col="blue")
 	text(-0.08, zv, labels=format(zv, digits=3), cex=0.9)
 	text(pv2, -3, labels=pv2, cex=0.9)
 }
@@ -526,15 +526,15 @@ snorm.quant2 = function(pv, pv2, mt, dig=4) {
 	plot(x, pdf, type ="n", ylim=c(-y1, ymax), xlim=c(xmin, x2),
 		ylab=bquote(phi(z)), xlab="z", main=mt)
 	abline(h=0, col="green4")
-	lines(x, pdf, type="l", lwd=2, col=2)
+	lines(x, pdf, type="l", lwd=2, col="red")
 
     # Display major quantiles
 	yp = -0.1*ymax*(1:npv)
-	segments(zv2, yp, zv2, dv2, lty=3, col=4)
-	segments(0, 0, 0, dnorm(0), col=4)
+	segments(zv2, yp, zv2, dv2, lty=3, col="blue")
+	segments(0, 0, 0, dnorm(0), col="blue")
 
-	arrows(x1, yp, zv2, yp, length=0.1, code=2, col=4)
-	text(x1, yp, paste0("p=", pv2), pos=2, col=4, cex=0.8)
+	arrows(x1, yp, zv2, yp, length=0.1, code=2, col="blue")
+	text(x1, yp, paste0("p=", pv2), pos=2, col="blue", cex=0.8)
 	text(zv2, yp, round(zv2, dig), pos=4, cex=0.8)
 }
 
@@ -574,12 +574,12 @@ chi.prob = function(nu, xp, pup=0.995, mt, dig=4) {
 	plot(x, dchisq(x, nu), type ="n", main=mt,
 		ylim=c(-y1, ymax), xlim=c(0, up), ylab="f(x)", xlab="x")
 	abline(h=0, col="green4")
-	lines(x, dchisq(x, nu), type="l", lwd=2, col=2)
+	lines(x, dchisq(x, nu), type="l", lwd=2, col="red")
     # Display specific cumulative probabilities
-	abline(v=c(0, nu), col=3)
-	abline(v=xp, lty=2, col=4)
+	abline(v=c(0, nu), col="green")
+	abline(v=xp, lty=2, col="blue")
 	yp = -0.1*ymax*(1:nxp)
-	arrows(0, yp, xp, yp, length=0.1, code=2, col=4)
+	arrows(0, yp, xp, yp, length=0.1, code=2, col="blue")
 	text(xp, yp, labels=paste0("F(", xp, ")=", round(prx, dig)), pos=4, cex=0.8)
 }
 
@@ -619,14 +619,14 @@ chi.quant = function(nu, pv, pv2=pv, pup=0.999, mt, dig=4) {
 	plot(x, pdf, type ="n", ylim=c(-y1, ymax), xlim=c(-0.1*up, up),
 		ylab="f(x)", xlab="x", main=mt)
 	abline(h=0, col="green4")
-	lines(x, pdf, type="l", lwd=2, col=2)
+	lines(x, pdf, type="l", lwd=2, col="red")
     # Display major quantiles
 	cv2 = qchisq(pv2, nu)
-	abline(v=c(0, nu), col=3)
-	abline(v=cv2, lty=2, col=4)
+	abline(v=c(0, nu), col="green")
+	abline(v=cv2, lty=2, col="blue")
 	yp = -0.1*ymax*(1:npv)
-	arrows(0, yp, cv2, yp, length=0.1, code=2, col=4)
-	text(0, yp, paste0("p=", pv2), pos=2, col=4, cex=0.8)
+	arrows(0, yp, cv2, yp, length=0.1, code=2, col="blue")
+	text(0, yp, paste0("p=", pv2), pos=2, col="blue", cex=0.8)
 	text(cv2, yp, round(cv2, dig), pos=4, cex=0.8)
 }
 
@@ -649,21 +649,21 @@ tnorm.comp = function(nu=c(10, 30), lo=-3.5, up=3.5, dig=4, dcol) {
 	x = seq(lo, up, length=100)
 	x1 = lo*1.1
 	x2 = up*1.1
-	if (missing(dcol)) dcol=c(1, 2, 4, "green2", "purple", "pink", "cyan", "orange")
+	if (missing(dcol)) dcol=c("black", "red", "blue", "green2", "purple", "pink", "cyan", "orange")
 	# Set graphic window
 	win.graph(7,6)
 	par(mfrow=c(2,1))
 	par(mar=c(4,4,4,2))
 	# Plot PDF => Fig (a)
 	plot(x, dnorm(x), type="l", main="N(0,1) & T-dist.", lwd=2, xlim=c(x1,x2), ylab="f(x)", xlab="(a)")
-	abline(v=0, lty=2, col=3)
+	abline(v=0, lty=2, col="green")
 
 	for (i in 1:4) lines(x, dt(x, nu[i]), lwd=1, col=dcol[i+1])
 	legend("topright", c("N(0,1)", paste0("t(", nu, ")")), lwd=2, cex=0.8, col=dcol)
 	# PDF in log-scale => Fig (b)
 	plot(x, dnorm(x), type="l", log="y", main="N(0,1) & T-dist. (Log scale)",
 		lwd=2, xlim=c(x1,x2), ylab="log[f(x)]", xlab="(b)")
-	abline(v=0, lty=2, col=3)
+	abline(v=0, lty=2, col="green")
 	for (i in 1:4) lines(x, dt(x, nu[i]), lwd=1, col=dcol[i+1])
 }
 
@@ -702,13 +702,13 @@ fdist.sim=function(nu1=5, nu2=5, N=10000, ng=250, seed=9857, xp=1:9, dig=4) {
     # Plot histogram
 	win.graph(7, 5)
 	hist(fs1, breaks=ng, prob=T,
-		xlim=c(0,xmax), col=7,
+		xlim=c(0,xmax), col="yellow",
 		main=bquote("("~chi[.(nu1)]^2~"/"~.(nu1)~") / ("~chi[.(nu2)]^2~"/"~.(nu2)~
 			")  ~  F("~.(nu1)~","~.(nu2)~")" ), ylab="f(x)", xlab="x")
-	curve(fd1, 0, xmax, lwd=2, col=2, add=T)
+	curve(fd1, 0, xmax, lwd=2, col="red", add=T)
 	legend("topright", c("Para.  Exact   Simul.",
 			paste("E(X) ", Ex2, Ex1), paste("D(X) ", Dx2, Dx1)),
-		text.col=c(1,4,4) )
+		text.col=c("black","blue","blue") )
     # Compare the cumulative probabilities F(1), F(2), ...
 	Theory = pf(xp, nu1, nu2)
 	Simula = sapply(xp, function(x) sum(fs1<x))/N
@@ -750,12 +750,12 @@ f.prob = function(nu1=5, nu2=5, xp, mt, dig=4) {
 	plot(x, df(x, nu1, nu2), type ="n", main=mt,
 		ylim=c(-y1, ymax), xlim=c(0, up), ylab="f(x)", xlab="x")
 	abline(h=0, col="green4")
-	lines(x, df(x, nu1, nu2), type="l", lwd=2, col=2)
+	lines(x, df(x, nu1, nu2), type="l", lwd=2, col="red")
     # Display specific cumulative probabilities
 	abline(v=0, col="green4")
-	abline(v=xp, lty=2, col=4)
+	abline(v=xp, lty=2, col="blue")
 	yp = -0.1*ymax*(1:nxp)
-	arrows(0, yp, xp, yp, length=0.1, code=2, col=4)
+	arrows(0, yp, xp, yp, length=0.1, code=2, col="blue")
 	text(xp, yp, labels=paste0("F(", xp, ")=", round(prx, dig)), pos=4, cex=0.8)
 }
 
@@ -796,13 +796,13 @@ f.quant = function(nu1=5, nu2=5, pv, pv2=pv, pup=0.995, mt, dig=4) {
 	plot(x, pdf, type ="n", ylim=c(-y1, ymax), xlim=c(-0.1*up, up),
 		ylab="f(x)", xlab="x", main=mt)
 	abline(h=0, col="green4")
-	lines(x, pdf, type="l", lwd=2, col=2)
+	lines(x, pdf, type="l", lwd=2, col="red")
     # Display major quantiles
 	cv2 = qf(pv2, nu1, nu2)
-	abline(v=0, col=3)
-	abline(v=cv2, lty=2, col=4)
+	abline(v=0, col="green")
+	abline(v=cv2, lty=2, col="blue")
 	yp = -0.1*ymax*(1:npv)
-	arrows(0, yp, cv2, yp, length=0.1, code=2, col=4)
-	text(0, yp, paste0("p=", pv2), pos=2, col=4, cex=0.8)
+	arrows(0, yp, cv2, yp, length=0.1, code=2, col="blue")
+	text(0, yp, paste0("p=", pv2), pos=2, col="blue", cex=0.8)
 	text(cv2, yp, round(cv2, dig), pos=4, cex=0.8)
 }

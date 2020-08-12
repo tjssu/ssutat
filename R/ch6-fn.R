@@ -103,8 +103,8 @@ disc.mexp = function(xv, fx, fx2, fx3, mt, dig=3, del=0.2, prt=TRUE, plot=TRUE) 
 	win.graph(3*nc, 3*nr)
 	par(mfrow=c(nr, nc))
 	for (k in 1:ng) {
-		plot(xv, fx[[k]], type="h", main=mt[k], ylab="f(x)", xlab="x", lwd=3, col=2)
-		if (Add2) lines(xv-del, fx2[[k]], type="h", lwd=3, col=4)
+		plot(xv, fx[[k]], type="h", main=mt[k], ylab="f(x)", xlab="x", lwd=3, col="red")
+		if (Add2) lines(xv-del, fx2[[k]], type="h", lwd=3, col="blue")
 		if (Add3) lines(xv+del, fx3[[k]], type="h", lwd=3, col="green3")
 	}
      }

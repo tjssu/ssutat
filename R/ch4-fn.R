@@ -79,8 +79,8 @@ ch4.man = function(fn=0) {
 	cat("X\t Sample space vector of the first random variable\n")
 	cat("Y\t Sample space vector of the second random variable\n")
 	cat("[Optional Input]--------------------------\n")
-	cat("prt\t Logical value for printing the joint frequency and probability (default=TRUE)\n")
-	cat("plot\t Logical value for plotting the joint PDF (default=FALSE)\n")
+	cat("prt\t Logical value for printing the joint probability (default=TRUE)\n")
+	cat("plot\t Logical value for plotting the joint probability (default=FALSE)\n")
 	cat("dig\t Number of digits below the decimal point in the console (default=4)\n")
 	cat("dig2\t Number of digits below the decimal point in the graph (default=3)\n")
 	cat("ep \t Minimum value for displaying the joint probability (default=0)\n")
@@ -239,9 +239,9 @@ rolldie.sum = function(n, cex=1) {
 		main=paste0("Probability Distribution of the Sum of ", n, " Dice"),
 		lwd=4, ylim=c(0, max(X.prob)+0.01))
 	fitnorm = function(x) dnorm(x, EX, DX)
-	curve(fitnorm, Xmin, Xmax, add=T, col=4)
+	curve(fitnorm, Xmin, Xmax, add=T, col="blue")
      # Display probability(frequency)
-	text(Xmin:Xmax, X.prob, labels=X.freq, pos=3, col=4, cex=cex)
+	text(Xmin:Xmax, X.prob, labels=X.freq, pos=3, col="blue", cex=cex)
 	legend("topright", c(paste("S-S.Size =",N), paste("E(X) =",EX),
 		paste("D(X) =", round(DX,4))), bg="white")
 }
@@ -286,7 +286,7 @@ hyp.sample = function(npop, ndef, nsamp, cex=0.8, dig=4) {
 		main=paste0("Prob. Distn. of Successes in ", nsamp, " Samples out of (",
 			ndef, "/", npop, ")"), xlab="Number of Successes", ylab="f(x)")
      # Display probability(frequency)
-	    text(X.val, fx, labels=round(fx, dig), pos=3, cex=cex, col=4)
+	    text(X.val, fx, labels=round(fx, dig), pos=3, cex=cex, col="blue")
 	    legend("topright", c(paste("E(X) =",EX),
 		paste("D(X) =", round(DX,4))), bg="white")
 	invisible(fx)
@@ -323,11 +323,11 @@ disc.cdf = function(xv, xp,mt, cpt=1.2, cex=1, dig=3) {
 	if (missing(mt)) mt = paste0("Cumulative distribution function(CDF) of ", xname)
 	win.graph(7, 5)
 	plot(sf, main=mt, verticals=F, pch=19, lwd=2, cex=1.2,
-		col=2, xlab="x", ylab="F(x)")
-	grid(col=3)
-	points(xv, xcdf[-length(xcdf)], col=2, cex=cpt)
+		col="red", xlab="x", ylab="F(x)")
+	grid(col="green")
+	points(xv, xcdf[-length(xcdf)], col="red", cex=cpt)
      # Display the probability
-	text(xv, xcdf[-1], labels=round(xcdf[-1], dig), cex=cex, col=4, pos=2)
+	text(xv, xcdf[-1], labels=round(xcdf[-1], dig), cex=cex, col="blue", pos=2)
      # Mean and variance of random variable X
 	EX = sum(xv * xp)
 	EX2 = sum(xv^2 * xp)
@@ -366,15 +366,15 @@ cont.cdf = function(FUN, low, up, xs, mt, dig=4, pos="bottomright") {
     # Plot the CDF F(x)
 	win.graph(7, 5)
 	plot(xrange, VFx(xrange), type="l", lwd=3, main=mt,
-		col=2, xlab="x", ylab="F(x)")
+		col="red", xlab="x", ylab="F(x)")
     # Display the CDF F(xs)
-	grid(col=3)
+	grid(col="green")
 	abline(h=0)
 	if (!missing(xs)) {
 		n = length(xs)
 		lp = low + (up-low)*0.2
-		segments(lp, VFx(xs), xs, VFx(xs), lty=2, col=4)
-		segments(xs, 0, xs, VFx(xs), lty=2, col=4)
+		segments(lp, VFx(xs), xs, VFx(xs), lty=2, col="blue")
+		segments(xs, 0, xs, VFx(xs), lty=2, col="blue")
 		text(rep(low, n), VFx(xs), labels=paste0("F(", xs, ")=",
 			round(VFx(xs),dig)), cex=0.8, col=1, pos=4)
 	}
@@ -449,7 +449,7 @@ disc.joint2 = function(X, Y, prt=TRUE, plot=FALSE, dig=4, dig2=3, ep=0) {
 		xlab=Xn, ylab=Yn, zlab="f(x, y)", pch=16, lwd=5, color=dcol[dc])
 	  s3d.coords = s3d$xyz.convert(xa, ya, fxy)
 	  text(s3d.coords$x[fxy>ep], s3d.coords$y[fxy>ep], labels = round(fxy[fxy>ep], dig2),
-		pos = 3, offset = 0.3, col=4, cex=0.8)
+		pos = 3, offset = 0.3, col="blue", cex=0.8)
 	}
     # X, Y joint PDF Return
 	invisible(list(freq=tabXY, prob=ptabXY))
@@ -580,11 +580,11 @@ disc.marg2 = function(tabXY, Xn, Yn, prt=TRUE, plot=FALSE, dig=5, dig2=4) {
 	  par(mfrow=c(2, 1))
 	  par(mar=c(3,4,4,2))
 	  plot(xa, ptabX, type="h", main=paste("Marginal Probability Distribution of", Xn),
-		ylim=c(0, max(ptabX)*1.1), xlab="", ylab="f(x)", pch=16, lwd=5, col=2)
-	  text(xa, ptabX, paste0(tabX, "/", N), pos=3, col=4, cex=0.8)
+		ylim=c(0, max(ptabX)*1.1), xlab="", ylab="f(x)", pch=16, lwd=5, col="red")
+	  text(xa, ptabX, paste0(tabX, "/", N), pos=3, col="blue", cex=0.8)
 	  plot(ya, ptabY, type="h", main=paste("Marginal Probability Distribution of", Yn),
-		ylim=c(0, max(ptabY)*1.1), xlab="", ylab="f(y)", pch=16, lwd=5, col=2)
-	  text(ya, ptabY, paste0(tabY, "/", N), pos=3, col=4, cex=0.8)
+		ylim=c(0, max(ptabY)*1.1), xlab="", ylab="f(y)", pch=16, lwd=5, col="red")
+	  text(ya, ptabY, paste0(tabY, "/", N), pos=3, col="blue", cex=0.8)
 	}
 	invisible(list(fx=ptabX, fy=ptabY))
 }
@@ -623,18 +623,18 @@ cont.marg2 = function(FUN, lo1, up1, lo2, up2, xs, ys) {
 	par(mfrow=c(2, 1))
 	par(mar=c(3,4,4,2))
 	plot(xa, Vfx(xa), type="l", main="Marginal Probability Density Function of X",
-		ylim=c(0, max(Vfx(xa))*1.1), xlab="", ylab="f(x)", lwd=3, col=2)
+		ylim=c(0, max(Vfx(xa))*1.1), xlab="", ylab="f(x)", lwd=3, col="red")
 	if (!missing(xs)) {
 		fxv = Vfx(xs)
-		segments(lo1+0.07*(up1-lo1), fxv, xs, fxv, lty=2, col=4)
-		text(rep(lo1+0.02*(up1-lo1), length(xs)), fxv, round(fxv, 4), cex=0.8, col=4)
+		segments(lo1+0.07*(up1-lo1), fxv, xs, fxv, lty=2, col="blue")
+		text(rep(lo1+0.02*(up1-lo1), length(xs)), fxv, round(fxv, 4), cex=0.8, col="blue")
 	}
 	plot(ya, Vfy(ya), type="l", main="Marginal Probability Density Function of Y", pch=16, lwd=3,
-		ylim=c(0, max(Vfy(ya))*1.1), xlab="", ylab="f(y)", col=2)
+		ylim=c(0, max(Vfy(ya))*1.1), xlab="", ylab="f(y)", col="red")
 	if (!missing(ys)) {
 		fyv = Vfy(ys)
-		segments(lo2+0.07*(up2-lo2), fyv, ys, fyv, lty=2, col=4)
-		text(rep(lo2+0.02*(up2-lo2), length(ys)), fyv, round(fyv, 4), cex=0.8, col=4)
+		segments(lo2+0.07*(up2-lo2), fyv, ys, fyv, lty=2, col="blue")
+		text(rep(lo2+0.02*(up2-lo2), length(ys)), fyv, round(fyv, 4), cex=0.8, col="blue")
 	}
     # Return marginal PDF f(x) and f(y)
 	invisible(list(fx=Vfx(xa), fy=Vfy(ya)))
@@ -711,8 +711,8 @@ disc.cond2 = function(tabXY, Xs, Ys, prt=TRUE, plot=FALSE, dig=5, dig2=4) {
 	  for (k in 1:nc) {
 	    plot(da, cpdf[[k]], type="h",
 		main=paste0("Cond. Prob. Dist. of ", Dn, " | ", Cn, "=", Cs[k]),
-		ylim=c(0, max(cpdf[[k]])*1.15), xlab="", ylab=yla, pch=16, lwd=5, col=2)
-	    text(da, cpdf[[k]], paste0(cfreq[[k]], "/", sum(cfreq[[k]])), pos=3, col=4, cex=0.8)
+		ylim=c(0, max(cpdf[[k]])*1.15), xlab="", ylab=yla, pch=16, lwd=5, col="red")
+	    text(da, cpdf[[k]], paste0(cfreq[[k]], "/", sum(cfreq[[k]])), pos=3, col="blue", cex=0.8)
 	  }
 	}
 	invisible(list(freq=cfreq, pdf=cpdf))
@@ -763,16 +763,16 @@ cont.cond2 = function(FUN, xc, yc, xs, ys, lo, up) {
 	  par(mar=c(3,4,4,2))
 	  plot(da, cpdf(da), type="l",
 		main=paste0("Conditional PDF of ", Dn, " | ", Cn, "=", Cs),
-		ylim=c(0, max(cpdf(da))*1.1), xlab="", ylab=yla, lwd=3, col=2)
+		ylim=c(0, max(cpdf(da))*1.1), xlab="", ylab=yla, lwd=3, col="red")
 	if (!missing(xs)) {
 		fxv = cpdf(xs)
-		segments(lo+0.07*(up-lo), fxv, xs, fxv, lty=2, col=4)
-		text(rep(lo+0.02*(up-lo), length(xs)), fxv, round(fxv, 3), cex=0.8, col=4)
+		segments(lo+0.07*(up-lo), fxv, xs, fxv, lty=2, col="blue")
+		text(rep(lo+0.02*(up-lo), length(xs)), fxv, round(fxv, 3), cex=0.8, col="blue")
 	}
 	if (!missing(ys)) {
 		fyv = cpdf(ys)
-		segments(lo+0.07*(up-lo), fyv, ys, fyv, lty=2, col=4)
-		text(rep(lo+0.02*(up-lo), length(ys)), fyv, round(fyv, 3), cex=0.8, col=4)
+		segments(lo+0.07*(up-lo), fyv, ys, fyv, lty=2, col="blue")
+		text(rep(lo+0.02*(up-lo), length(ys)), fyv, round(fyv, 3), cex=0.8, col="blue")
 	}
     # Return the CDF
 	invisible(cpdf(da))
@@ -932,7 +932,7 @@ cont.trans = function(fx, TF, FTF, a, b, lo=0, up=1, plot=FALSE, ...) {
 	cord.y = c(0, fx(seq(a, b, 0.01)), 0)
 	polygon(cord.x, cord.y, col='lightcyan')
 	text(xm, ym, labels=paste0("P(",a,"<X<",b,")\n=",round(px, 4)), ...)
-	lines(xa, fx(xa), lwd=2, col=2)
+	lines(xa, fx(xa), lwd=2, col="red")
     # Display the pdf of Y and P(a2<Y<b2)
 	for (k in 1:N) {a2 = min(TF[[k]](c(a,b)))
 		b2 = max(TF[[k]](c(a,b)))
@@ -953,7 +953,7 @@ cont.trans = function(fx, TF, FTF, a, b, lo=0, up=1, plot=FALSE, ...) {
 		cord.y = c(0, FTF[[k]](seq(a2, b2, 0.01)), 0)
 		polygon(cord.x, cord.y, col='lightcyan')
 		text(xm, ym, labels=paste0("P(",a2,"<", Vn[k],"<",b2,")\n=",round(py[k],4)), ...)
-		lines(xa, FTF[[k]](xa), lwd=2, col=2)
+		lines(xa, FTF[[k]](xa), lwd=2, col="red")
 	}
      }
 }
